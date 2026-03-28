@@ -47,7 +47,7 @@ function Header() {
       <header className='w-[95%] lg:w-[80%] mx-auto bg-(--second-color) px-5 py-3 flex items-center justify-between rounded-b-lg relative z-30'>
         <div className='flex items-center gap-2'>
           <img src="./logo.png" alt="" className='w-[40px]' />
-          <span className='text-(--main-color) text-xl uppercase font-bold '>code<span className='text-(--text-color)'>ya</span></span>
+          <span className='text-(--main-color) text-xl capitalize font-bold '>code<span className='text-(--text-color)'>ya</span></span>
         </div>
         {/* Desktop Navbar */}
         <nav className="hidden lg:flex items-center gap-10 grow justify-center">

@@ -4,11 +4,11 @@ import { FaGithub, FaInstagram, FaQuoteLeft, FaQuoteRight, FaFacebook, FaPhone }
 import { SiGmail } from "react-icons/si";
 function Footer() {
     return (
-        <footer className="w-full bg-(--second-color) text-(--main-color) py-10 px-6 md:px-0 mt-10">
+        <footer className="w-full bg-[#0A4A30] text-(--main-color) py-10 px-6 md:px-0 mt-10">
             <div className="w-[95%] lg:w-[80%] mx-auto flex flex-col md:flex-row justify-between lg:items-center md:items-start gap-8">
                 {/* Left: Logo & Slogan */}
                 <div className="flex flex-col lg:items-center">
-                    <img src="./footerlogo.jpg" alt="logo" className="w-30 mb-2" />
+                    <img src="./footerLogo.png" alt="logo" className="w-30 mb-2" />
                     <span className="text-lg text-(--main-color) mt-1 flex items-center gap-2 capitalize">
                         <span className='text-xs'><FaQuoteLeft /></span>
                         Code Your Agency
