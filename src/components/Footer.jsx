@@ -11,7 +11,7 @@ function Footer() {
                     <img src="./footerlogo.jpg" alt="logo" className="w-30 mb-2" />
                     <span className="text-lg text-(--main-color) mt-1 flex items-center gap-2 capitalize">
                         <span className='text-xs'><FaQuoteLeft /></span>
-                        code your dream
+                        Code Your Agency
                         <span className='text-xs'><FaQuoteRight /></span>
                     </span>
                 </div>
