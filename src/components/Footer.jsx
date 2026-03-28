@@ -2,7 +2,18 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaGithub, FaInstagram, FaQuoteLeft, FaQuoteRight, FaFacebook, FaPhone } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
+import { useTranslation } from 'react-i18next';
+
 function Footer() {
+    const { t } = useTranslation();
+
+    const footerLinks = [
+        { to: "/", text: t("footer.home") },
+        { to: "/about", text: t("footer.about") },
+        { to: "/projects", text: t("footer.projects") },
+        { to: "/contact", text: t("footer.contactUs") },
+    ];
+
     return (
         <footer className="w-full bg-[#0A4A30] text-(--main-color) py-10 px-6 md:px-0 mt-10">
             <div className="w-[95%] lg:w-[80%] mx-auto flex flex-col md:flex-row justify-between lg:items-center md:items-start gap-8">
@@ -18,20 +29,15 @@ function Footer() {
 
                 {/* Center: Page Links */}
                 <div className="flex flex-col lg:items-center w-[700px]">
-                    <div className="mb-2 font-bold text-xl text-white">Our Links</div>
+                    <div className="mb-2 font-bold text-xl text-white">{t("footer.ourLinks")}</div>
                     <ul className="flex flex-col gap-3 text-lg">
-                        {[
-                            { to: "/", text: "Home" },
-                            { to: "/about", text: "About" },
-                            { to: "/projects", text: "Projects" },
-                            { to: "/contact", text: "Contact Us" },
-                        ].map((link, idx) => (
+                        {footerLinks.map((link) => (
                             <li key={link.text}>
                                 <Link
                                     to={link.to}
                                     className={`
-                    transition-all duration-300 relative block pl-0 hover:pl-2
-                  `}
+                                        transition-all duration-300 relative block pl-0 hover:pl-2
+                                    `}
                                     style={{
                                         transitionProperty: "padding, color",
                                     }}
@@ -45,14 +51,14 @@ function Footer() {
 
                 {/* Right: Social Links & Gmail */}
                 <div className="flex flex-col gap-2">
-                    <div className="mb-2 font-bold text-xl text-white">Follow Us</div>
+                    <div className="mb-2 font-bold text-xl text-white">{t("footer.followUs")}</div>
                     <div className="flex gap-5 text-2xl mb-2">
                         <a
                             href="https://github.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-black transition"
-                            title="Github"
+                            title={t("footer.github")}
                         >
                             <FaGithub />
                         </a>
@@ -61,7 +67,7 @@ function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-blue-600 transition"
-                            title="LinkedIn"
+                            title={t("footer.facebook")}
                         >
                             <FaFacebook />
                         </a>
@@ -70,7 +76,7 @@ function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-pink-500 transition"
-                            title="Instagram"
+                            title={t("footer.instagram")}
                         >
                             <FaInstagram />
                         </a>
@@ -80,7 +86,7 @@ function Footer() {
                             <span className="text-xl flex items-center gap-1"><SiGmail /> :</span>
                             <a
                                 href="mailto:codeyaa01@gmail.com"
-                                title="Send email via Gmail"
+                                title={t("footer.sendEmail")}
                                 className='hover:text-white'
                             >
                                 codeyaa01@gmail.com
@@ -88,7 +94,7 @@ function Footer() {
                         </div>
                         <div className='flex items-center gap-1'>
                             <span className="text-xl flex items-center gap-1 rotate-[-270deg]"><FaPhone /></span>
-                            <a>
+                            <a title={t("footer.phone")}>
                                 : +20 110710609
                             </a>
                         </div>

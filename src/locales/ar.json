@@ -1,0 +1,61 @@
+{
+  "translation": {
+    "nav": {
+      "home": "الرئيسية",
+      "about": "من نحن",
+      "projects": "المشاريع",
+      "contact": "اتصل بنا"
+    },
+    "cta": {
+      "getInTouch": "تواصل معنا"
+    },
+    "common": {
+      "whatsapp": "واتساب"
+    },
+    "footer": {
+      "slogan": "برمج وكالتك",
+      "ourLinks": "روابطنا",
+      "home": "الرئيسية",
+      "about": "من نحن",
+      "projects": "المشاريع",
+      "contactUs": "اتصل بنا",
+      "followUs": "تابعنا",
+      "github": "جيت هب",
+      "facebook": "فيسبوك",
+      "instagram": "انستجرام",
+      "gmail": "جيميل",
+      "sendEmail": "أرسل بريدًا عبر جيميل",
+      "phone": "الهاتف"
+    },
+    "projectsPage": {
+      "filters": {
+        "all": "الكل",
+        "websites": "مواقع",
+        "landingPage": "صفحات هبوط",
+        "eCommerce": "متاجر",
+        "mobileApp": "تطبيقات"
+      },
+      "section": {
+        "title": "عملنا",
+        "accent": "المميز"
+      },
+      "heroTagline": {
+        "title": "كل مشروع قصة نجاح —",
+        "subtitle": "خلينا نكتب قصتك معانا."
+      },
+      "cta": {
+        "headline": "مشروعك الجاي هنا 🚀",
+        "paragraph": "تواصل معانا دلوقتي وابدأ رحلتك الرقمية",
+        "button": "تواصل معانا ✦"
+      }
+    },
+    "projectsCards": {
+      "viewProject": "عرض المشروع",
+      "comingSoon": "قريباً"
+    },
+    "sectionHeader": {
+      "title": "عنوان الصفحة",
+      "accent": "تمييز"
+    }
+  }
+}

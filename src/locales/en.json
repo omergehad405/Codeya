@@ -1,0 +1,62 @@
+{
+  "translation": {
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "contact": "Contact"
+    },
+    "cta": {
+      "getInTouch": "Get in touch"
+    },
+    "common": {
+      "whatsapp": "WhatsApp"
+    },
+    "comingSoon": "Coming soon",
+    "footer": {
+      "slogan": "Code Your Agency",
+      "ourLinks": "Our Links",
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "contactUs": "Contact Us",
+      "followUs": "Follow Us",
+      "github": "Github",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "gmail": "Gmail",
+      "sendEmail": "Send email via Gmail",
+      "phone": "Phone"
+    },
+    "projectsPage": {
+      "filters": {
+        "all": "All",
+        "websites": "Websites",
+        "landingPage": "Landing Pages",
+        "eCommerce": "eCommerce",
+        "mobileApp": "Mobile Apps"
+      },
+      "section": {
+        "title": "Our",
+        "accent": "Work"
+      },
+      "heroTagline": {
+        "title": "Every project is a success story —",
+        "subtitle": "Let’s write your story with us."
+      },
+      "cta": {
+        "headline": "Your next project is here 🚀",
+        "paragraph": "Contact us now and start your digital journey",
+        "button": "Contact Us ✦"
+      }
+    },
+    "sectionHeader": {
+      "title": "Page Title",
+      "accent": "Accent"
+    },
+    "projectsCards": {
+      "viewProject": "View Project",
+      "comingSoon": "Coming soon"
+    }
+  }
+}
