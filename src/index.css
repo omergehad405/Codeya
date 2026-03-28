@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+  }
+}
+
+@custom-variant hover (&:hover);
+
+:root {
+  --main-color: #eef3e4;
+  --second-color: #004836;
+  --background-color: #012340;
+  --text-color: #04d939;
+}
+
+body {
+  background-color: var(--main-color);
+}
