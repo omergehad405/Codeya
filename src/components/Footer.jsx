@@ -15,7 +15,7 @@ function Footer() {
     ];
 
     return (
-        <footer className="w-full bg-[#0A4A30] text-(--main-color) py-10 px-6 md:px-0 mt-10">
+        <footer className="w-full bg-[#0A4A30] text-(--main-color) py-10 px-6 md:px-0">
             <div className="w-[95%] lg:w-[80%] mx-auto flex flex-col md:flex-row justify-between lg:items-center md:items-start gap-8">
                 {/* Left: Logo & Slogan */}
                 <div className="flex flex-col lg:items-center">

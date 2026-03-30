@@ -3,80 +3,30 @@ import { useTranslation } from 'react-i18next'
 import SectionHeader from '../../components/SectionHeader'
 import ProjectsCards from './ProjectsCards'
 
-// Add missing fields from ProjectsCards.jsx: image (can be null/undefined or specific), keep all keys
-// const PROJECTS = [
-//     {
-//         id: 1,
-//         title: 'Lumina Store',
-//         category: 'eCommerce',
-//         description: 'منصة تسوق متكاملة بتجربة مستخدم سلسة وسرعة خاطفة.',
-//         tags: ['React', 'Node.js', 'Stripe'],
-//         link: 'https://example.com',
-//         accent: '#04d939',
-//         ready: true,
-//         // From ProjectsCards.jsx structure:
-//         image: null,
-//     },
-//     {
-//         id: 2,
-//         title: 'AgencyX',
-//         category: 'landing page',
-//         description: 'صفحة هبوط احترافية لوكالة إبداعية بأنيميشن مبهر.',
-//         tags: ['HTML', 'GSAP', 'CSS'],
-//         link: 'https://example.com',
-//         accent: '#00b8ff',
-//         ready: true,
-//         image: null,
-//     },
-//     {
-//         id: 3,
-//         title: 'MedBook',
-//         category: 'mobile app',
-//         description: 'تطبيق حجز مواعيد طبية بواجهة بسيطة وتجربة ممتازة.',
-//         tags: ['React Native', 'Firebase'],
-//         link: 'https://example.com',
-//         accent: '#ff6b6b',
-//         ready: true,
-//         image: null,
-//     },
-//     {
-//         id: 4,
-//         title: 'PortfolioOS',
-//         category: 'websites',
-//         description: 'موقع بورتفوليو بتصميم يحاكي نظام تشغيل كامل.',
-//         tags: ['Next.js', 'Framer Motion'],
-//         link: 'https://example.com',
-//         accent: '#ffd700',
-//         ready: true,
-//         image: null,
-//     },
-//     {
-//         id: 5,
-//         title: 'ShopFlow',
-//         category: 'eCommerce',
-//         description: 'قريباً — متجر إلكتروني بذكاء اصطناعي لتخصيص التوصيات.',
-//         tags: ['AI', 'Python', 'React'],
-//         link: null,
-//         accent: '#c084fc',
-//         ready: false,
-//         image: null,
-//     },
-//     {
-//         id: 6,
-//         title: 'FitTrack',
-//         category: 'mobile app',
-//         description: 'قريباً — تطبيق لياقة يتتبع تقدمك اليومي بتصميم محفز.',
-//         tags: ['Flutter', 'Firebase'],
-//         link: null,
-//         accent: '#fb923c',
-//         ready: false,
-//         image: null,
-//     },
-// ]
+// Projects with category as an array, replacing tags
+const PROJECTS = [
+    {
+        id: 1,
+        title: "Afaq al tareq",
+        category: ["websites", "landing page"], // category is now an array
+        description: "A modern, interactive showcase of work and experience. for afaq al tareq website",
+        link: "https://afaqaltariq.sa/",
+        accent: "#04d939", // default accent, you can change
+        ready: true,
+        image: "./ProjectsImages/project1.png",
+    },
+    {
+        id: 2,
+        title: "the new muslims",
+        category: ["websites"], // category is now an array
+        description: "A modern, interactive website for the new muslims",
+        link: "https://the-new-muslims.com/",
+        accent: "#00b8ff",
+        ready: true,
+        image: "",
+    },
+]
 
-const PROJECTS = []
-
-// In FILTERS, use the filter keyword values for logic, but translation keys for labels via i18n
 const FILTERS = [
     { value: 'All', tKey: 'projectsPage.filters.all' },
     { value: 'websites', tKey: 'projectsPage.filters.websites' },
@@ -89,10 +39,10 @@ function Projects() {
     const [activeFilter, setActiveFilter] = useState('All')
     const { t } = useTranslation()
 
-    // Filtering logic for projects
+    // Filtering logic: filter by presence in category array
     const filteredProjects = activeFilter === 'All'
         ? PROJECTS
-        : PROJECTS.filter(project => project.category === activeFilter)
+        : PROJECTS.filter(project => Array.isArray(project.category) && project.category.includes(activeFilter))
 
     return (
         <div className="min-h-screen bg-(--main-color)">

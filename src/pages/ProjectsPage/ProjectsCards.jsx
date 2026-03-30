@@ -205,7 +205,7 @@ function ProjectCard({ project, index }) {
                         letterSpacing: '0.07em',
                     }}
                 >
-                    {categoryLabel}
+                    {categoryLabel + " , "}
                 </span>
 
                 {/* Index top-left */}

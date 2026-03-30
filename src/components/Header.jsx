@@ -61,7 +61,7 @@ function Header() {
 
   return (
     <>
-      <header className='w-[95%] lg:w-[80%] mx-auto bg-(--second-color) px-5 py-3 flex items-center justify-between rounded-b-lg relative z-30'>
+      <header className='mx-auto bg-(--second-color) px-10 py-3 flex items-center justify-between relative z-30'>
         <div className='flex items-center gap-2'>
           <img src="./logo.png" alt="" className='w-[40px]' />
           <span className='text-(--main-color) text-xl capitalize font-bold '>code<span className='text-(--text-color)'>ya</span></span>
@@ -127,4 +127,4 @@ function Header() {
   );
 }
 
-export default Header
+export default Header
