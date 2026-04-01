@@ -31,8 +31,17 @@ const STYLES = `
   .hero-img-float { animation: imageFloat 4s ease-in-out infinite; }
   .hero-img-shadow { animation: imageShadowPulse 4s ease-in-out infinite; }
 
+  #hero-section {
+    min-height: 100vh;
+  }
+
   /* Responsive grid for hero section */
   @media (max-width: 900px) {
+    #hero-section {
+      min-height: auto !important;
+      padding-top: 120px;
+      padding-bottom: 20px;
+    }
     .hero-grid-container {
       grid-template-columns: 1fr !important;
       gap: 42px !important;
@@ -111,7 +120,6 @@ export default function HeroSection() {
       <section
         id="hero-section"
         style={{
-          minHeight: "100vh",
           background: BG,
           fontFamily: DISPLAY,
           display: "flex",
@@ -138,7 +146,7 @@ export default function HeroSection() {
 
         {/* ── two-col ── */}
         <div
-          className="hero-grid-container"
+            className="hero-grid-container"
           style={{
             position: "relative", zIndex: 2,
             maxWidth: 1280, margin: "0 auto", width: "100%",

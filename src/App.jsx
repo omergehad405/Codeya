@@ -5,6 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Projects from './pages/ProjectsPage/Projects'
 import HomePage from './pages/HomePage/HomePage'
+import ContactPage from './pages/ContactPage/ContactPage'
+import AboutPage from './pages/AboutPage/AboutPage'
 
 function App() {
   const { i18n } = useTranslation()
@@ -20,8 +22,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<div>About Page</div>} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
     </Router>
