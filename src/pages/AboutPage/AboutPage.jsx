@@ -1,18 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-const stats = [
-    { num: '2+', label: 'Projects Shipped' },
-    { num: '98%', label: 'Client Satisfaction' },
-    { num: '1+', label: 'Years Building' },
-    { num: '24h', label: 'Avg. Response Time' },
-]
 
-const values = [
-    { icon: '⚡', title: 'Speed without shortcuts', desc: 'We move fast — but never at the cost of quality. Every line of code matters.' },
-    { icon: '🔍', title: 'Radical transparency', desc: 'No fluff, no hidden costs. You always know where your project stands.' },
-    { icon: '🤝', title: 'Partners, not vendors', desc: "We treat your business like it's ours. Your win is our win." },
-    { icon: '🚀', title: 'Built to scale', desc: 'We architect with growth in mind. What we build today handles tomorrow.' },
-]
 
 function useInView(threshold = 0.15) {
     const ref = useRef(null)
@@ -30,16 +19,19 @@ function useInView(threshold = 0.15) {
 
 function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
     const [ref, inView] = useInView()
-    const transforms = { up: 'translateY(40px)', left: 'translateX(-40px)', right: 'translateX(40px)', none: 'none' }
+    const transforms = { 
+        up: 'translate-y-10', 
+        left: '-translate-x-10', 
+        right: 'translate-x-10', 
+        none: 'translate-0' 
+    }
+    
     return (
         <div
             ref={ref}
-            className={className}
-            style={{
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'none' : transforms[direction],
-                transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
-            }}
+            className={`transition-all duration-700 ease-out ${className}
+                ${inView ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${transforms[direction]}`}`}
+            style={{ transitionDelay: `${delay}s` }}
         >
             {children}
         </div>
@@ -47,178 +39,117 @@ function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
 }
 
 export default function AboutPage() {
-    const [count, setCount] = useState({ p: 0, c: 0, y: 0 })
-    const statsRef = useRef(null)
-    const [statsVisible, setStatsVisible] = useState(false)
+    const { t } = useTranslation()
+    
+    const stats = [
+        { num: '2+', label: t('aboutPage.stats.projects') },
+        { num: '98%', label: t('aboutPage.stats.satisfaction') },
+        { num: '1+', label: t('aboutPage.stats.years') },
+        { num: '24h', label: t('aboutPage.stats.response') },
+    ]
 
-    useEffect(() => {
-        const obs = new IntersectionObserver(
-            ([e]) => { if (e.isIntersecting) setStatsVisible(true) },
-            { threshold: 0.3 }
-        )
-        if (statsRef.current) obs.observe(statsRef.current)
-        return () => obs.disconnect()
-    }, [])
+    const values = [
+        { icon: '⚡', title: t('aboutPage.values.speedTitle'), desc: t('aboutPage.values.speedDesc') },
+        { icon: '🔍', title: t('aboutPage.values.transparencyTitle'), desc: t('aboutPage.values.transparencyDesc') },
+        { icon: '🤝', title: t('aboutPage.values.partnersTitle'), desc: t('aboutPage.values.partnersDesc') },
+        { icon: '🚀', title: t('aboutPage.values.scaleTitle'), desc: t('aboutPage.values.scaleDesc') },
+    ]
+
+    const statsRef = useRef(null)
 
     return (
-        <div style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif", background: '#f7fbf8', overflowX: 'hidden' }}>
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap');
-
-                * { box-sizing: border-box; margin: 0; padding: 0; }
-
-                .about-hero { position: relative; background: #004836; min-height: 92vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 6vw 8vh; overflow: hidden; }
-                .hero-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: clamp(100px,18vw,220px); font-weight: 900; color: rgba(255,255,255,0.03); white-space: nowrap; pointer-events: none; font-family: 'Playfair Display', serif; letter-spacing: -4px; }
-                .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(4,217,57,0.12); border: 1px solid rgba(4,217,57,0.3); border-radius: 30px; padding: 6px 16px; font-size: 12px; font-weight: 600; color: #04d939; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px; }
-                .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #04d939; animation: pulse 2s ease-in-out infinite; }
-                @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(0.8)} }
-                .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(42px, 7vw, 90px); font-weight: 900; color: #fff; line-height: 1.0; letter-spacing: -2px; margin-bottom: 24px; }
-                .hero-title span { color: #04d939; }
-                .hero-sub { font-size: clamp(14px, 1.5vw, 17px); color: rgba(255,255,255,0.55); max-width: 500px; line-height: 1.8; margin-bottom: 48px; }
-                .hero-scroll { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.3); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-                .scroll-line { width: 48px; height: 1px; background: rgba(255,255,255,0.2); }
-                .hero-corner { position: absolute; top: 40px; right: 6vw; font-size: 12px; color: rgba(255,255,255,0.2); letter-spacing: 3px; text-transform: uppercase; writing-mode: vertical-rl; }
-                .hero-dots { position: absolute; top: 40px; left: 6vw; display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; opacity: 0.15; }
-                .hdot { width: 4px; height: 4px; border-radius: 50%; background: #fff; }
-
-                .section { padding: clamp(60px, 10vw, 120px) 6vw; }
-                .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #04d939; margin-bottom: 16px; }
-                .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; color: #0a1a10; line-height: 1.15; letter-spacing: -1px; }
-                .section-title span { color: #004836; }
-
-                .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-                .story-text p { font-size: 15px; color: #4a6b58; line-height: 1.9; margin-bottom: 18px; }
-                .story-text p strong { color: #004836; font-weight: 700; }
-                .story-visual { position: relative; }
-                .story-card { background: #004836; border-radius: 24px; padding: 40px; color: #fff; position: relative; overflow: hidden; }
-                .story-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(4,217,57,0.08); }
-                .story-year { font-size: 72px; font-weight: 900; color: rgba(4,217,57,0.15); font-family: 'Playfair Display', serif; line-height: 1; margin-bottom: 8px; }
-                .story-quote { font-size: 18px; font-weight: 600; color: #fff; line-height: 1.5; margin-bottom: 20px; }
-                .story-author { font-size: 12px; color: #7aab96; letter-spacing: 1px; }
-                .floating-tag { position: absolute; bottom: -20px; left: 40px; background: #04d939; color: #004836; font-size: 12px; font-weight: 800; padding: 10px 20px; border-radius: 30px; letter-spacing: 0.5px; box-shadow: 0 8px 24px rgba(4,217,57,0.3); }
-
-                .stats-section { background: #004836; }
-                .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-                .stat-block { padding: 60px 40px; text-align: center; border-right: 1px solid rgba(255,255,255,0.06); }
-                .stat-block:last-child { border-right: none; }
-                .stat-num { font-family: 'Playfair Display', serif; font-size: clamp(36px,4vw,60px); font-weight: 900; color: #04d939; line-height: 1; margin-bottom: 10px; }
-                .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 1.5px; text-transform: uppercase; }
-
-                .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
-                .value-card { background: #fff; border: 1.5px solid #e4ede8; border-radius: 20px; padding: 32px; transition: all 0.3s ease; cursor: default; }
-                .value-card:hover { border-color: #04d939; transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,72,54,0.08); }
-                .value-icon { font-size: 28px; margin-bottom: 16px; display: block; }
-                .value-title { font-size: 16px; font-weight: 700; color: #0a1a10; margin-bottom: 8px; }
-                .value-desc { font-size: 13px; color: #6b8a78; line-height: 1.7; }
-
-                .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 48px; }
-                .team-card { border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; position: relative; }
-                .team-card:hover { transform: translateY(-8px); }
-                .team-avatar { aspect-ratio: 3/4; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-                .team-emoji { font-size: 52px; margin-bottom: 12px; }
-                .team-name { font-size: 14px; font-weight: 700; color: #fff; text-align: center; padding: 0 12px; }
-                .team-role { font-size: 11px; color: rgba(255,255,255,0.55); text-align: center; margin-top: 4px; letter-spacing: 0.3px; }
-                .team-overlay { position: absolute; inset: 0; background: rgba(4,217,57,0.92); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease; }
-                .team-card:hover .team-overlay { opacity: 1; }
-                .team-overlay p { font-size: 13px; color: #004836; font-weight: 600; text-align: center; line-height: 1.6; }
-
-                .cta-section { background: #0a1a10; text-align: center; padding: clamp(80px,12vw,140px) 6vw; position: relative; overflow: hidden; }
-                .cta-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 300px; color: rgba(255,255,255,0.015); font-family: 'Playfair Display', serif; font-weight: 900; pointer-events: none; white-space: nowrap; }
-                .cta-title { font-family: 'Playfair Display', serif; font-size: clamp(32px,5vw,64px); font-weight: 900; color: #fff; margin-bottom: 20px; letter-spacing: -1px; }
-                .cta-title span { color: #04d939; }
-                .cta-sub { font-size: 15px; color: rgba(255,255,255,0.4); margin-bottom: 40px; }
-                .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: #04d939; color: #004836; font-size: 14px; font-weight: 800; padding: 16px 36px; border-radius: 50px; text-decoration: none; letter-spacing: 0.3px; transition: all 0.3s; box-shadow: 0 0 0 0 rgba(4,217,57,0.4); }
-                .cta-btn:hover { transform: scale(1.04); box-shadow: 0 0 0 12px rgba(4,217,57,0.1); }
-
-                @media (max-width: 900px) {
-                    .story-grid { grid-template-columns: 1fr; gap: 40px; }
-                    .stats-grid { grid-template-columns: 1fr 1fr; }
-                    .stat-block:nth-child(2) { border-right: none; }
-                    .values-grid { grid-template-columns: 1fr; }
-                    .team-grid { grid-template-columns: repeat(3,1fr); }
-                }
-                @media (max-width: 580px) {
-                    .team-grid { grid-template-columns: 1fr 1fr; }
-                    .stats-grid { grid-template-columns: 1fr 1fr; }
-                }
-            `}</style>
-
+        <div className="font-sans bg-brand-light overflow-x-hidden">
             {/* ── HERO ── */}
-            <div className="about-hero">
-                <div className="hero-bg-text">CODEYAA</div>
-                <div className="hero-corner">Est. 2026</div>
-                <div className="hero-dots">
-                    {Array.from({ length: 25 }).map((_, i) => <div key={i} className="hdot" />)}
+            <div className="relative bg-brand-deep min-h-[92vh] flex flex-col justify-end px-6 pb-20 md:px-12 lg:px-24 overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(100px,18vw,220px)] font-black text-white/[0.03] whitespace-nowrap pointer-events-none tracking-[-4px]">
+                    CODEYAA
                 </div>
-                <div style={{ opacity: 0, animation: 'fadeUp 0.8s ease 0.2s forwards' }}>
-                    <div className="hero-badge">
-                        <span className="pulse-dot" />
-                        Our Story
+                <div className="absolute top-10 right-6 md:right-12 font-sans text-xs text-white/20 tracking-[3px] uppercase [writing-mode:vertical-rl]">
+                    Est. 2026
+                </div>
+                <div className="absolute top-10 left-6 md:left-12 grid grid-cols-5 gap-2 opacity-15">
+                    {Array.from({ length: 25 }).map((_, i) => (
+                        <div key={i} className="w-1 h-1 rounded-full bg-white" />
+                    ))}
+                </div>
+
+                <div className="animate-[fadeUp_0.8s_ease_0.2s_forwards] opacity-0">
+                    <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 text-xs font-bold text-brand-neon tracking-widest uppercase mb-7">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
+                        {t('aboutPage.hero.badge')}
                     </div>
                 </div>
-                <div style={{ opacity: 0, animation: 'fadeUp 0.8s ease 0.4s forwards' }}>
-                    <h1 className="hero-title">
-                        We build<br />
-                        <span>digital</span><br />
-                        futures.
+
+                <div className="animate-[fadeUp_0.8s_ease_0.4s_forwards] opacity-0">
+                    <h1 className="font-serif text-[clamp(42px,7vw,90px)] font-black text-white leading-none tracking-tight mb-6">
+                        {t('aboutPage.hero.title1')}<br />
+                        <span className="text-brand-neon">{t('aboutPage.hero.title2')}</span><br />
+                        {t('aboutPage.hero.title3')}
                     </h1>
                 </div>
-                <div style={{ opacity: 0, animation: 'fadeUp 0.8s ease 0.6s forwards' }}>
-                    <p className="hero-sub">
-                        Codeyaa is a brand-new software studio with bold ambitions. We're a startup born to move fast, craft quality, and help you win. Size doesn't scare us — it keeps us sharp. Let's grow together.
+
+                <div className="animate-[fadeUp_0.8s_ease_0.6s_forwards] opacity-0">
+                    <p className="text-[clamp(14px,1.5vw,17px)] text-white/55 max-w-[500px] leading-relaxed mb-12">
+                        {t('aboutPage.hero.sub')}
                     </p>
                 </div>
-                <div className="hero-scroll">
-                    <div className="scroll-line" />
-                    Scroll to explore
+
+                <div className="flex items-center gap-3 text-white/30 text-[10px] tracking-[2px] uppercase">
+                    <div className="w-12 h-[1px] bg-white/20" />
+                    {t('aboutPage.hero.scroll')}
                 </div>
-                <style>{`
-                    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
-                `}</style>
             </div>
 
             {/* ── STORY ── */}
-            <div className="section" style={{ background: '#f7fbf8' }}>
-                <div className="story-grid">
+            <div className="py-20 px-6 md:py-32 lg:px-24 bg-brand-light">
+                <div className="max-w-[1280px] mx-auto grid grid-cols-1 min-[901px]:grid-cols-2 gap-12 min-[901px]:gap-20 items-center">
                     <FadeIn direction="left">
-                        <div className="story-text">
-                            <div className="section-tag">Our story</div>
-                            <h2 className="section-title" style={{ marginBottom: 32 }}>
-                                Fresh ideas.<br />
-                                <span>Startup energy.</span>
+                        <div>
+                            <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
+                                {t('aboutPage.story.tag')}
+                            </div>
+                            <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-black text-brand-dark leading-tight tracking-tight mb-8">
+                                {t('aboutPage.story.title1')}<br />
+                                <span className="text-brand-deep">{t('aboutPage.story.title2')}</span>
                             </h2>
-                            <p>
-                                Codeyaa was founded in <strong>2026</strong>, right in the heart of the digital era's next wave. We believe that startups—like yours—deserve tech partners who are as fast, motivated, and hungry as they are.
-                            </p>
-                            <p>
-                                We're a new team, but we move with the urgency and imagination that modern business demands. Side by side, we’ll turn scrappy beginnings into amazing launches, products, and results.
-                            </p>
-                            <p>
-                                If you want a team that's all-in on your vision, driven for impact, and unrestrained by "the old ways" — let’s make something powerful together.
-                            </p>
+                            <div className="space-y-4 text-[15px] text-[#4a6b58] leading-relaxed">
+                                <p>
+                                    {t('aboutPage.story.p1')} <strong className="text-brand-deep font-bold">2026</strong>{t('aboutPage.story.p1part2')}
+                                </p>
+                                <p>{t('aboutPage.story.p2')}</p>
+                                <p>{t('aboutPage.story.p3')}</p>
+                            </div>
                         </div>
                     </FadeIn>
+
                     <FadeIn direction="right" delay={0.15}>
-                        <div className="story-visual">
-                            <div className="story-card">
-                                <div className="story-year">26</div>
-                                <p className="story-quote">"We're a startup just like you — ready to build the future, one line at a time."</p>
-                                <p className="story-author">— The Codeyaa Team</p>
+                        <div className="relative">
+                            <div className="bg-brand-deep rounded-[24px] p-10 text-white relative overflow-hidden">
+                                <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full bg-brand-neon/8" />
+                                <div className="font-serif text-[72px] font-black text-brand-neon/15 leading-none mb-2">26</div>
+                                <p className="text-lg font-semibold text-white leading-relaxed mb-5">{t('aboutPage.story.quote')}</p>
+                                <p className="text-xs text-[#7aab96] tracking-wider uppercase">{t('aboutPage.story.author')}</p>
                             </div>
-                            <div className="floating-tag">Startup Energy ⚡</div>
+                            <div className="absolute -bottom-5 left-10 bg-brand-neon text-brand-deep text-xs font-black px-5 py-2.5 rounded-full tracking-wide shadow-[0_8px_24px_rgba(4,217,57,0.3)]">
+                                {t('aboutPage.story.floatingTag')}
+                            </div>
                         </div>
                     </FadeIn>
                 </div>
             </div>
 
             {/* ── STATS ── */}
-            <div className="stats-section section" ref={statsRef} style={{ padding: 0 }}>
-                <div className="stats-grid">
+            <div className="stats-section bg-brand-deep" ref={statsRef}>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-[1px]">
                     {stats.map((s, i) => (
                         <FadeIn key={s.label} delay={i * 0.1}>
-                            <div className="stat-block">
-                                <div className="stat-num">{s.num}</div>
-                                <div className="stat-label">{s.label}</div>
+                            <div className="p-10 md:p-14 text-center border-white/5 min-[901px]:border-r last:border-r-0">
+                                <div className="font-serif text-[clamp(36px,4vw,60px)] font-black text-brand-neon leading-none mb-2.5">
+                                    {s.num}
+                                </div>
+                                <div className="text-xs text-white/40 tracking-[1.5px] uppercase">
+                                    {s.label}
+                                </div>
                             </div>
                         </FadeIn>
                     ))}
@@ -226,42 +157,48 @@ export default function AboutPage() {
             </div>
 
             {/* ── VALUES ── */}
-            <div className="section" style={{ background: '#f7fbf8' }}>
-                <FadeIn>
-                    <div className="section-tag">What drives us</div>
-                    <h2 className="section-title">
-                        Built on <span>principles.</span>
-                    </h2>
-                </FadeIn>
-                <div className="values-grid">
-                    {values.map((v, i) => (
-                        <FadeIn key={v.title} delay={i * 0.1}>
-                            <div className="value-card">
-                                <span className="value-icon">{v.icon}</span>
-                                <div className="value-title">{v.title}</div>
-                                <div className="value-desc">{v.desc}</div>
-                            </div>
-                        </FadeIn>
-                    ))}
+            <div className="py-20 px-6 md:py-32 lg:px-24 bg-brand-light">
+                <div className="max-w-[1280px] mx-auto">
+                    <FadeIn>
+                        <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
+                            {t('aboutPage.principles.tag')}
+                        </div>
+                        <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-black text-brand-dark leading-tight tracking-tight">
+                            {t('aboutPage.principles.title1')}<span className="text-brand-deep">{t('aboutPage.principles.title2')}</span>
+                        </h2>
+                    </FadeIn>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12">
+                        {values.map((v, i) => (
+                            <FadeIn key={v.title} delay={i * 0.1}>
+                                <div className="bg-white border border-brand-border rounded-[20px] p-8 transition-all duration-300 cursor-default hover:border-brand-neon hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,72,54,0.08)]">
+                                    <span className="text-[28px] mb-4 block">{v.icon}</span>
+                                    <div className="text-base font-bold text-brand-dark mb-2">{v.title}</div>
+                                    <div className="text-[13px] text-[#6b8a78] leading-relaxed">{v.desc}</div>
+                                </div>
+                            </FadeIn>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-
             {/* ── CTA ── */}
-            <div className="cta-section">
-                <div className="cta-bg">→</div>
-                <FadeIn>
-                    <h2 className="cta-title">
-                        Ready to build<br />
-                        <span>something great?</span>
-                    </h2>
-                    <p className="cta-sub">Let's turn your idea into a product people love.</p>
-                    <a href="/contact" className="cta-btn">
-                        Start a project →
-                    </a>
-                </FadeIn>
+            <div className="bg-brand-dark text-center py-24 px-6 md:py-32 relative overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(150px,25vw,300px)] font-black text-white/[0.015] whitespace-nowrap pointer-events-none tracking-tighter">
+                    →
+                </div>
+                <div className="relative z-10 max-w-[800px] mx-auto">
+                    <FadeIn>
+                        <h2 className="font-serif text-[clamp(32px,5vw,64px)] font-black text-white mb-5 tracking-tight">
+                            {t('aboutPage.cta.title1')}<br />
+                            <span className="text-brand-neon">{t('aboutPage.cta.title2')}</span>
+                        </h2>
+                        <p className="text-[15px] text-white/40 mb-10">{t('aboutPage.cta.sub')}</p>
+                        <a href="/contact" className="inline-flex items-center gap-2.5 bg-brand-neon text-brand-deep text-sm font-black px-9 py-4 rounded-full tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_0_12px_rgba(4,217,57,0.1)]">
+                            {t('aboutPage.cta.btn')}
+                        </a>
+                    </FadeIn>
+                </div>
             </div>
-
         </div>
     )
-}
+}

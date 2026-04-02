@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -61,113 +62,76 @@ const LABELS = {
 }
 
 function ProjectCard({ project, index }) {
-    const [hovered, setHovered] = useState(false)
+    const { t } = useTranslation()
     const [ref, inView] = useInView()
     const idx = String(index + 1).padStart(2, '0')
 
     return (
         <div
             ref={ref}
-            className="proj-card-outer"
-            style={{
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'none' : 'translateY(36px)',
-                transition: `opacity 0.7s ease ${index * 0.1}s, transform 0.7s ease ${index * 0.1}s`,
-            }}
+            className={`transition-all duration-700 ease-out h-full flex flex-col w-full max-w-[400px] mx-auto min-[901px]:max-w-none
+                ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-9'}`}
+            style={{ transitionDelay: `${index * 0.1}s` }}
         >
-            <article
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                className="proj-card-inner"
-                style={{
-                    background: '#fff',
-                    border: `1.5px solid ${hovered ? '#04d939' : '#e4ede8'}`,
-                    borderRadius: 20, 
-                    overflow: 'hidden',
-                    transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
-                    boxShadow: hovered ? '0 16px 48px rgba(0,72,54,0.1)' : 'none',
-                    transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
+            <article className="group bg-white border border-brand-border rounded-[20px] overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-brand-neon hover:shadow-[0_16px_48px_rgba(0,72,54,0.1)] flex flex-col h-full">
                 {/* Image */}
                 {project.image ? (
                     <img
                         src={project.image} alt={project.title}
-                        style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }}
+                        className="w-full aspect-video object-cover block"
                         onError={e => {
-                            e.currentTarget.outerHTML = `<div style="width:100%;aspect-ratio:16/9;background:#f0f7f3;display:flex;align-items:center;justify-content:center;border-bottom:1.5px solid #e4ede8"><span style="font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:rgba(0,72,54,0.12)">${idx}</span></div>`
+                            e.currentTarget.outerHTML = `<div class="w-full aspect-video bg-[#f0f7f3] flex items-center justify-center border-b border-brand-border"><span class="font-serif text-[72px] font-black text-brand-deep/12">${idx}</span></div>`
                         }}
                     />
                 ) : (
-                    <div style={{
-                        width: '100%', aspectRatio: '16/9', background: '#f0f7f3',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        borderBottom: '1.5px solid #e4ede8',
-                    }}>
-                        <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 72, fontWeight: 900, color: 'rgba(0,72,54,0.12)' }}>
+                    <div className="w-full aspect-video bg-[#f0f7f3] flex items-center justify-center border-b border-brand-border">
+                        <span className="font-serif text-[72px] font-black text-brand-deep/12">
                             {idx}
                         </span>
                     </div>
                 )}
 
                 {/* Body */}
-                <div style={{ padding: '22px 24px 24px', flex: '1 1 auto', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div className="p-6 md:p-7 flex-grow flex flex-col justify-between">
                     <div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <div className="flex items-center justify-between mb-3.5">
+                            <div className="flex gap-1.5 flex-wrap">
                                 {project.category.map(c => (
-                                    <span key={c} style={{
-                                        fontSize: 10, fontWeight: 700, letterSpacing: '1px',
-                                        textTransform: 'uppercase', color: '#004836',
-                                        background: 'rgba(0,72,54,0.07)', border: '1px solid rgba(0,72,54,0.15)',
-                                        padding: '3px 10px', borderRadius: 30,
-                                    }}>
+                                    <span key={c} className="text-[10px] font-bold tracking-wider uppercase text-brand-deep bg-brand-deep/7 border border-brand-deep/15 px-2.5 py-0.5 rounded-full">
                                         {LABELS[c] || c}
                                     </span>
                                 ))}
                             </div>
-                            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 11, color: 'rgba(10,26,16,0.2)' }}>{idx}</span>
+                            <span className="font-serif text-[11px] text-brand-dark/20">{idx}</span>
                         </div>
-                        <h3 style={{
-                            fontFamily: "'Playfair Display',serif", fontSize: 19, fontWeight: 700,
-                            color: '#0a1a10', margin: '0 0 8px', lineHeight: 1.2,
-                        }}>{project.title}</h3>
-                        <p style={{ fontSize: 13, color: '#6b8a78', lineHeight: 1.7, margin: '0 0 18px' }}>
+                        <h3 className="font-serif text-[19px] font-bold text-brand-dark mb-2 leading-tight">
+                            {project.title}
+                        </h3>
+                        <p className="text-[13px] text-[#6b8a78] leading-relaxed mb-4.5">
                             {project.description}
                         </p>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 16, borderTop: '1px solid #e4ede8' }}>
+                    
+                    <div className="flex items-center justify-between pt-4 border-t border-brand-border">
                         {project.ready && project.link ? (
                             <a
                                 href={project.link} target="_blank" rel="noopener noreferrer"
                                 onClick={e => e.stopPropagation()}
-                                style={{
-                                    display: 'inline-flex', alignItems: 'center', gap: 7,
-                                    fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 700,
-                                    color: '#004836', textDecoration: 'none', letterSpacing: '0.3px',
-                                    transition: 'gap 0.2s',
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.gap = '12px'}
-                                onMouseLeave={e => e.currentTarget.style.gap = '7px'}
+                                className="inline-flex items-center gap-1.5 font-sans text-xs font-bold text-brand-deep no-underline tracking-wide group/link transition-all"
                             >
-                                View Project
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <span className="group-hover/link:translate-x-1 transition-transform duration-200">
+                                    {t('projectsCards.viewProject')}
+                                </span>
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-200">
                                     <path d="M2.5 11.5L11.5 2.5M11.5 2.5H5M11.5 2.5V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </a>
                         ) : (
-                            <span style={{ fontSize: 11, fontWeight: 500, color: 'rgba(10,26,16,0.3)', letterSpacing: '0.5px' }}>
-                                Coming Soon
+                            <span className="text-[11px] font-medium text-brand-dark/30 tracking-wider uppercase">
+                                {t('projectsCards.comingSoon')}
                             </span>
                         )}
-                        <div style={{
-                            width: 7, height: 7, borderRadius: '50%',
-                            background: project.ready ? '#04d939' : '#e4ede8',
-                            boxShadow: project.ready ? '0 0 6px rgba(4,217,57,0.5)' : 'none',
-                        }} />
+                        <div className={`w-1.5 h-1.5 rounded-full ${project.ready ? 'bg-brand-neon shadow-[0_0_6px_rgba(4,217,57,0.5)]' : 'bg-brand-border'}`} />
                     </div>
                 </div>
             </article>
@@ -176,105 +140,34 @@ function ProjectCard({ project, index }) {
 }
 
 export default function ProjectsSection() {
+    const { t } = useTranslation()
     return (
-        <section
-            id="projects"
-            style={{
-                background: '#f7fbf8',
-                fontFamily: "'DM Sans', sans-serif",
-                padding: 'clamp(80px,10vw,130px) 6vw',
-            }}
-        >
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
-        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(0.8)} }
-        .proj-pulse { animation: pulse 2s ease-in-out infinite; }
-        .proj-cards { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(clamp(250px, 38vw, 400px), 1fr)); 
-            gap: 20px; 
-            margin-top: 40px;
-        }
-        .proj-card-outer {
-            min-width: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .proj-card-inner {
-            height: 100%;
-            display: flex; 
-            flex-direction: column;
-        }
-        /* Center grid cards horizontally at mid screens */
-        @media (max-width: 1000px) {
-            .proj-cards {
-                grid-template-columns: repeat(auto-fill, minmax(min(100%, 325px),1fr));
-                justify-items: center;
-                justify-content: center;
-            }
-            .proj-card-outer {
-                width: 100%;
-                max-width: 370px;
-                margin-left: auto !important;
-                margin-right: auto !important;
-            }
-        }
-        /* At small devices, each card is full width and centered below heading */
-        @media (max-width: 700px) {
-            .proj-cards {
-                grid-template-columns: 1fr;
-                gap: 18px;
-                justify-items: center;
-            }
-            .proj-card-outer {
-                width: 100%;
-                max-width: 97vw;
-                margin-left: auto !important;
-                margin-right: auto !important;
-            }
-            .proj-card-inner {
-                border-radius: 12px !important;
-            }
-        }
-      `}</style>
-
-            <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <section id="projects" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32">
+            <div className="max-w-[1280px] mx-auto w-full">
                 <Reveal>
-                    <div style={{
-                        fontSize: 11, fontWeight: 700, letterSpacing: '3px',
-                        textTransform: 'uppercase', color: '#04d939', marginBottom: 16,
-                    }}>Portfolio</div>
-                    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-                        <h2 style={{
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: 'clamp(28px,4vw,48px)',
-                            fontWeight: 900, color: '#0a1a10',
-                            lineHeight: 1.1, letterSpacing: '-1.5px', margin: 0,
-                        }}>
-                            Work we're <span style={{ color: '#004836' }}>proud of.</span>
+                    <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
+                        {t('homePage.projects.portfolio')}
+                    </div>
+                    <div className="flex items-end justify-between flex-wrap gap-4">
+                        <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-black text-brand-dark leading-[1.1] tracking-[-1.5px] m-0">
+                            {t('homePage.projects.workWeAre')}<span className="text-brand-deep">{t('homePage.projects.proudOf')}</span>
                         </h2>
                         <a
                             href="/projects"
-                            style={{
-                                display: 'inline-flex', alignItems: 'center', gap: 8,
-                                fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 700,
-                                color: '#004836', textDecoration: 'none', letterSpacing: '0.3px',
-                                transition: 'gap 0.2s',
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.gap = '14px'}
-                            onMouseLeave={e => e.currentTarget.style.gap = '8px'}
+                            className="inline-flex items-center gap-2 font-sans text-[13px] font-bold text-brand-deep no-underline tracking-wide group transition-all"
                         >
-                            View all projects
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <span className="group-hover:translate-x-1 transition-transform duration-200">
+                                {t('homePage.projects.viewAll')}
+                            </span>
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200">
                                 <path d="M2.5 11.5L11.5 2.5M11.5 2.5H5M11.5 2.5V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </a>
                     </div>
-                    <div style={{ height: 1, background: 'linear-gradient(90deg, #c8ddd2 0%, rgba(200,221,210,0.2) 60%, transparent 100%)', marginTop: 36 }} />
+                    <div className="h-[1px] bg-gradient-to-r from-[#c8ddd2] via-[#c8ddd2]/20 to-transparent mt-9" />
                 </Reveal>
 
-                <div className="proj-cards">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-10 justify-items-center">
                     {PREVIEW_PROJECTS.map((project, i) => (
                         <ProjectCard key={project.id} project={project} index={i} />
                     ))}
@@ -282,4 +175,4 @@ export default function ProjectsSection() {
             </div>
         </section>
     )
-}
+}

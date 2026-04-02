@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -14,87 +15,56 @@ function useInView(threshold = 0.12) {
     return [ref, inView]
 }
 
-function Reveal({ children, delay = 0 }) {
-    const [ref, inView] = useInView()
-    return (
-        <div
-            ref={ref}
-            style={{
-                opacity: inView ? 1 : 0,
-                transform: inView ? 'none' : 'translateY(36px)',
-                transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
-            }}
-        >
-            {children}
-        </div>
-    )
-}
-
 function SoonBadge() {
+    const { t } = useTranslation()
     const [dotCount, setDotCount] = useState(0)
     useEffect(() => {
         const id = setInterval(() => setDotCount(c => (c + 1) % 4), 500)
         return () => clearInterval(id)
     }, [])
     return (
-        <div style={{ textAlign: 'center', padding: '60px 0' }}>
-            <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 10,
-                background: 'rgba(4,217,57,0.07)',
-                border: '1.5px solid rgba(4,217,57,0.2)',
-                borderRadius: 16, padding: '28px 40px',
-                flexDirection: 'column',
-            }}>
-                <div style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 'clamp(28px,4vw,42px)',
-                    fontWeight: 900, color: '#0a1a10',
-                    letterSpacing: '-1.5px',
-                }}>
-                    Coming Soon<span style={{ color: '#04d939' }}>{'.'.repeat(dotCount)}</span>
+        <div className="text-center py-16 px-4">
+            <div className="inline-flex flex-col items-center gap-2.5 bg-brand-neon/7 border border-brand-neon/20 rounded-2xl p-7 md:p-10 max-w-full">
+                <div className="font-serif text-[clamp(28px,4vw,42px)] font-black text-brand-dark tracking-tight">
+                    {t('homePage.testimonials.comingSoon')}<span className="text-brand-neon">{'.'.repeat(dotCount)}</span>
                 </div>
-                <p style={{ fontSize: 14, color: '#6b8a78', lineHeight: 1.7, maxWidth: 400, margin: 0 }}>
-                    We'll be publishing client reviews and amazing stories here soon.
-                    Stay tuned for authentic testimonials!
+                <p className="text-sm text-[#6b8a78] leading-relaxed max-w-[400px] m-0">
+                    {t('homePage.testimonials.soonDesc')}
                 </p>
             </div>
         </div>
     )
 }
 
-export default function TestimonialsSection() {
+function Reveal({ children, delay = 0 }) {
+    const [ref, inView] = useInView()
     return (
-        <section
-            id="testimonials"
-            style={{
-                background: '#f7fbf8',
-                fontFamily: "'DM Sans', sans-serif",
-                padding: 'clamp(80px,10vw,130px) 6vw',
-            }}
+        <div
+            ref={ref}
+            className={`transition-all duration-700 ease-out 
+                ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-9'}`}
+            style={{ transitionDelay: `${delay}s` }}
         >
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap');
-      `}</style>
+            {children}
+        </div>
+    )
+}
 
-            <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+export default function TestimonialsSection() {
+    const { t } = useTranslation()
+    return (
+        <section id="testimonials" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32 overflow-hidden">
+            <div className="max-w-[1280px] mx-auto w-full">
                 <Reveal>
-                    <div style={{
-                        fontSize: 11, fontWeight: 700, letterSpacing: '3px',
-                        textTransform: 'uppercase', color: '#04d939', marginBottom: 16,
-                    }}>
-                        Client Love
+                    <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
+                        {t('homePage.testimonials.clientLove')}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-                        <h2 style={{
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: 'clamp(28px,4vw,48px)',
-                            fontWeight: 900, color: '#0a1a10',
-                            lineHeight: 1.1, letterSpacing: '-1.5px', margin: 0,
-                        }}>
-                            What Clients <span style={{ color: '#004836' }}>Say.</span>
+                    <div className="flex items-end justify-between flex-wrap gap-4">
+                        <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-black text-brand-dark leading-[1.1] tracking-[-1.5px] m-0">
+                            {t('homePage.testimonials.whatClients')}<span className="text-brand-deep">{t('homePage.testimonials.say')}</span>
                         </h2>
                     </div>
-                    <div style={{ height: 1, background: 'linear-gradient(90deg, #c8ddd2 0%, rgba(200,221,210,0.2) 60%, transparent 100%)', marginTop: 36, marginBottom: 40 }} />
+                    <div className="h-[1px] bg-gradient-to-r from-[#c8ddd2] via-[#c8ddd2]/20 to-transparent mt-9 mb-10" />
                 </Reveal>
 
                 <Reveal delay={0.15}>
@@ -103,4 +73,4 @@ export default function TestimonialsSection() {
             </div>
         </section>
     )
-}
+}

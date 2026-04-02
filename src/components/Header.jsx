@@ -36,385 +36,35 @@ function Header() {
 
   return (
     <>
-      <style>{`
-        .nav-header {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          transition: all 0.4s ease;
-          font-family: 'DM Sans', 'Segoe UI', sans-serif;
-        }
-        .nav-header.scrolled {
-          box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.18);
-        }
-        .nav-inner {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 32px;
-          height: 68px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 32px;
-        }
-        .nav-logo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          text-decoration: none;
-          flex-shrink: 0;
-        }
-        .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
-        .nav-logo-text {
-          font-size: 18px;
-          font-weight: 800;
-          color: #eef3e4;
-          letter-spacing: -0.3px;
-        }
-        .nav-logo-text span { color: #04d939; }
 
-        /* Desktop links */
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          flex-wrap: wrap;
-        }
-        .nav-links li {
-          flex-shrink: 0;
-        }
-        .nav-links li a {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          padding: 8px 16px;
-          font-size: 14px;
-          font-weight: 500;
-          color: rgba(238,243,228,0.65);
-          text-decoration: none;
-          border-radius: 8px;
-          transition: color 0.2s, background 0.2s;
-          letter-spacing: 0.1px;
-          min-width: 64px;
-          justify-content: center;
-        }
-        .nav-links li a:hover {
-          color: #eef3e4;
-          background: rgba(255,255,255,0.06);
-        }
-        .nav-links li a.active {
-          color: #eef3e4;
-          background: rgba(255,255,255,0.08);
-        }
-        .nav-links li a.active::after {
-          content: '';
-          position: absolute;
-          bottom: 6px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 16px;
-          height: 2px;
-          border-radius: 2px;
-          background: #04d939;
-        }
-        @media (max-width: 1200px) {
-          .nav-inner {
-            padding: 0 16px;
-            gap: 16px;
-          }
-          .nav-links {
-            gap: 2px;
-          }
-          .nav-links li a {
-            padding: 8px 10px;
-            font-size: 13px;
-            min-width: 52px;
-          }
-        }
-        @media (max-width: 900px) {
-          .nav-links { display: none; }
-          .desktop-cta { display: none; }
-        }
 
-        /* Medium screen: show nav-middle */
-        @media (max-width: 1200px) and (min-width: 901px) {
-          .nav-middle {
-            display: flex !important;
-          }
-        }
-        @media (min-width: 901px) and (max-width: 1200px) {
-          .cta-btn, .wa-btn {
-            font-size: 14px;
-          }
-        }
-        /* Hide nav-middle by default */
-        .nav-middle {
-          display: none;
-          align-items: center;
-          gap: 10px;
-        }
-
-        /* Make nav-links horizontal scrollable for extra small screens and prevent breaking layout */
-        @media (max-width: 600px) {
-          .nav-links {
-            overflow-x: auto;
-            max-width: 180px;
-            flex-wrap: nowrap !important;
-            gap: 0;
-          }
-          .nav-links::-webkit-scrollbar {
-            display: none;
-          }
-          .nav-links li {
-            flex: 0 0 auto;
-          }
-          .nav-links li a {
-            padding: 8px 6px;
-            font-size: 12px;
-            min-width: 42px;
-          }
-        }
-
-        /* Drawer styles for mobile menu (UL and CTA) */
-        .drawer-menu {
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 100vh;
-          width: min(320px, 85vw);
-          background: #004836;
-          box-shadow: 2px 0 24px rgba(0,0,0,0.18);
-          z-index: 150;
-          transform: translateX(-100%);
-          transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-          display: flex;
-          flex-direction: column;
-          padding: 0;
-          overflow-y: auto;
-        }
-        .drawer-menu.open {
-          transform: translateX(0);
-        }
-        .drawer-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 20px 24px;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .drawer-close {
-          width: 32px; height: 32px;
-          display: flex; align-items: center; justify-content: center;
-          background: rgba(255,255,255,0.07);
-          border: none; border-radius: 8px;
-          color: #eef3e4; font-size: 18px;
-          cursor: pointer; transition: background 0.2s;
-        }
-        .drawer-close:hover { background: rgba(255,255,255,0.12); }
-        .drawer-links {
-          list-style: none;
-          padding: 16px 16px 0;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-        .drawer-links li a {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 14px 16px;
-          border-radius: 10px;
-          font-size: 15px;
-          font-weight: 500;
-          color: rgba(238,243,228,0.7);
-          text-decoration: none;
-          transition: all 0.2s;
-        }
-        .drawer-links li a:hover,
-        .drawer-links li a.active {
-          background: rgba(255,255,255,0.07);
-          color: #eef3e4;
-        }
-        .drawer-links li a.active { color: #04d939; }
-        .drawer-arrow { font-size: 12px; opacity: 0.4; }
-        .drawer-cta-container {
-          padding: 24px 16px 8px 16px;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          margin-top: auto;
-        }
-        .drawer-cta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: #04d939;
-          color: #004836;
-          font-size: 14px;
-          font-weight: 800;
-          padding: 13px;
-          border-radius: 12px;
-          text-decoration: none;
-          font-family: inherit;
-          transition: background 0.2s;
-          width: 100%;
-        }
-        .drawer-cta:hover { background: #02c230; }
-        .drawer-menu .nav-bottom-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: 18px;
-          padding: 8px 16px 20px 16px;
-        }
-        .drawer-menu .lang-btn,
-        .drawer-menu .wa-btn {
-          margin: 0;
-        }
-        @media (min-width: 901px) {
-          .drawer-menu {
-            display: none !important;
-          }
-        }
-        .menu-btn {
-          display: none;
-          align-items: center;
-          background: transparent;
-          border: 1px solid rgba(238,243,228,0.15);
-          color: #eef3e4;
-          border-radius: 8px;
-          padding: 8px 14px;
-          font-size: 16px;
-          font-family: inherit;
-          cursor: pointer;
-          gap: 7px;
-          font-weight: 800;
-          letter-spacing: 1px;
-          transition: border-color 0.2s;
-        }
-        .menu-btn:hover {
-          border-color: rgba(238,243,228,0.35);
-          color: #04d939;
-        }
-        @media (max-width: 900px) {
-          .menu-btn {
-            display: flex;
-            margin-left: auto;
-          }
-        }
-        /* Right side */
-        .nav-right {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-shrink: 0;
-        }
-
-        /* Lang btn */
-        .lang-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px;
-          height: 36px;
-          border-radius: 8px;
-          border: 1px solid rgba(238,243,228,0.15);
-          background: transparent;
-          color: rgba(238,243,228,0.7);
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          cursor: pointer;
-          transition: all 0.2s;
-          font-family: inherit;
-          text-transform: uppercase;
-        }
-        .lang-btn:hover {
-          border-color: rgba(238,243,228,0.35);
-          color: #eef3e4;
-          background: rgba(255,255,255,0.06);
-        }
-
-        /* WhatsApp btn */
-        .wa-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px;
-          height: 36px;
-          border-radius: 8px;
-          background: rgba(37,211,102,0.12);
-          color: #04d939;
-          font-size: 17px;
-          text-decoration: none;
-          transition: all 0.2s;
-          border: 1px solid rgba(4,217,57,0.2);
-        }
-        .wa-btn:hover {
-          background: rgba(37,211,102,0.22);
-          border-color: rgba(4,217,57,0.4);
-        }
-
-        /* Divider */
-        .nav-divider {
-          width: 1px;
-          height: 20px;
-          background: rgba(255,255,255,0.1);
-          margin: 0 4px;
-        }
-
-        /* CTA button */
-        .cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: #04d939;
-          color: #004836;
-          font-size: 13px;
-          font-weight: 800;
-          padding: 9px 20px;
-          border-radius: 10px;
-          text-decoration: none;
-          letter-spacing: 0.2px;
-          transition: all 0.25s;
-          border: none;
-          cursor: pointer;
-          font-family: inherit;
-          white-space: nowrap;
-        }
-        .cta-btn:hover {
-          background: #02c230;
-          transform: translateY(-1px);
-          box-shadow: 0 6px 20px rgba(4,217,57,0.25);
-        }
-        .cta-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: rgba(0,72,54,0.5);
-          animation: ctapulse 2s ease-in-out infinite;
-        }
-        @keyframes ctapulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-      `}</style>
-
-      <header className={`nav-header ${scrolled ? 'scrolled' : ''}`} style={{ background: '#004836' }}>
-        <div className="nav-inner">
+      <header 
+        className={`sticky top-0 z-[100] transition-all duration-400 font-sans ${scrolled ? 'shadow-[0_1px_0_{rgba(255,255,255,0.06)},0_8px_32px_{rgba(0,0,0,0.18)}]' : ''}`} 
+        style={{ background: '#004836' }}
+      >
+        <div className="max-w-[1280px] mx-auto px-4 min-[901px]:px-8 h-[68px] flex items-center justify-between gap-4 min-[901px]:gap-8">
 
           {/* Logo */}
-          <Link to="/" className="nav-logo">
-            <img src="./logo.png" alt="Codeyaa" />
-            <span className="nav-logo-text">code<span>ya</span></span>
+          <Link to="/" className="flex items-center gap-2.5 no-underline shrink-0 group">
+            <img src="./logo.png" alt="Codeyaa" className="w-9 h-9 object-contain" />
+            <span className="text-lg font-extrabold text-brand-offwhite tracking-tight">
+              code<span className="text-brand-neon">ya</span>
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav>
-            <ul className="nav-links">
+          <nav className="hidden min-[901px]:block">
+            <ul className="flex items-center gap-1 list-none m-0 p-0 flex-wrap">
               {links.map(l => (
-                <li key={l.to}>
-                  <Link to={l.to} className={isActive(l.to) ? 'active' : ''}>
+                <li key={l.to} className="shrink-0">
+                  <Link 
+                    to={l.to} 
+                    className={`relative inline-flex items-center px-4 py-2 text-sm font-medium no-underline rounded-lg transition-all duration-200 tracking-wide min-w-[64px] justify-center
+                      ${isActive(l.to) 
+                        ? 'text-brand-offwhite bg-white/10 after:content-[""] after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-0.5 after:rounded-full after:bg-brand-neon' 
+                        : 'text-brand-offwhite/65 hover:text-brand-offwhite hover:bg-white/5'
+                      }`}
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -423,32 +73,35 @@ function Header() {
           </nav>
 
           {/* Middle area for WhatsApp and CTA on medium screens */}
-          <div className="nav-middle">
+          <div className="hidden min-[901px]:flex items-center gap-2.5">
             <a
               href="https://wa.me/201105710609"
               target="_blank"
               rel="noopener noreferrer"
-              className="wa-btn"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#25d3661f] text-brand-neon transition-all duration-200 border border-brand-neon/20 hover:bg-[#25d36638] hover:border-brand-neon/40 shrink-0"
               title="WhatsApp"
-              style={{ marginRight: 7 }}
             >
-              <FaWhatsapp />
+              <FaWhatsapp className="text-lg" />
             </a>
-            <Link to="/contact" className="cta-btn desktop-cta">
-              {t('cta.getInTouch')}
-              <span className="cta-dot" />
+            <Link to="/contact" className="inline-flex items-center gap-2 bg-brand-neon text-brand-deep text-[13px] font-extrabold px-5 py-2 rounded-xl no-underline tracking-wide transition-all duration-250 border-none cursor-pointer whitespace-nowrap hover:bg-[#02c230] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_{rgba(4,217,57,0.25)}] group">
+              {t('nav.reachUs')}
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-deep/50 animate-pulse" />
             </Link>
           </div>
 
           {/* Right side (Get In Touch and WhatsApp removed from here) */}
-          <div className="nav-right">
-            <button className="lang-btn" onClick={toggleLanguage} title="Switch language">
+          <div className="flex items-center gap-2 shrink-0">
+            <button 
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-brand-offwhite/15 bg-transparent text-brand-offwhite/70 text-xs font-bold tracking-wider cursor-pointer transition-all duration-200 uppercase hover:border-brand-offwhite/35 hover:text-brand-offwhite hover:bg-white/5" 
+              onClick={toggleLanguage} 
+              title="Switch language"
+            >
               {i18n.language === 'en' ? 'AR' : 'EN'}
             </button>
-            <div className="nav-divider" />
-            {/* Add menu button for mobile navigation */}
+            <div className="w-[1px] h-5 bg-white/10 mx-1 hidden min-[901px]:block" />
+            
             <button
-              className="menu-btn"
+              className="flex min-[901px]:hidden items-center bg-transparent border border-brand-offwhite/15 text-brand-offwhite rounded-lg px-3.5 py-2 text-base cursor-pointer gap-1.5 font-extrabold tracking-widest transition-all duration-200 hover:border-brand-offwhite/35 hover:text-brand-neon"
               onClick={() => setNavOpen(true)}
               aria-label="Open menu"
             >
@@ -459,47 +112,64 @@ function Header() {
       </header>
 
       {/* Drawer for UL and Get In Touch (drawer-menu) */}
-      <div className={`drawer-menu${navOpen ? ' open' : ''}`}>
-        <div className="drawer-header">
-          <Link to="/" className="nav-logo" onClick={() => setNavOpen(false)}>
-            <img src="./logo.png" alt="Codeyaa" />
-            <span className="nav-logo-text">code<span>ya</span></span>
+      <div 
+        className={`fixed top-0 left-0 h-screen w-[min(320px,85vw)] bg-brand-deep shadow-[2px_0_24px_rgba(0,0,0,0.18)] z-[150] transition-transform duration-350 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col overflow-y-auto ${navOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <div className="flex items-center justify-between p-5 px-6 border-b border-white/8">
+          <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={() => setNavOpen(false)}>
+            <img src="./logo.png" alt="Codeyaa" className="w-9 h-9 object-contain" />
+            <span className="text-lg font-extrabold text-brand-offwhite tracking-tight">
+              code<span className="text-brand-neon">ya</span>
+            </span>
           </Link>
-          <button className="drawer-close" onClick={() => setNavOpen(false)}>✕</button>
+          <button 
+            className="w-8 h-8 flex items-center justify-center bg-white/7 border-none rounded-lg text-brand-offwhite text-lg cursor-pointer transition-all duration-200 hover:bg-white/12" 
+            onClick={() => setNavOpen(false)}
+          >
+            ✕
+          </button>
         </div>
 
-        <ul className="drawer-links">
+        <ul className="list-none p-4 pb-0 m-0 flex flex-col gap-1">
           {links.map(l => (
             <li key={l.to}>
               <Link
                 to={l.to}
-                className={isActive(l.to) ? 'active' : ''}
+                className={`flex items-center justify-between p-3.5 px-4 rounded-[10px] text-[15px] font-medium no-underline transition-all duration-200
+                  ${isActive(l.to) ? 'bg-white/7 text-brand-neon' : 'text-brand-offwhite/70 hover:bg-white/7 hover:text-brand-offwhite'}`}
                 onClick={() => setNavOpen(false)}
               >
                 {l.label}
-                <span className="drawer-arrow">›</span>
+                <span className="text-[12px] opacity-40">›</span>
               </Link>
             </li>
           ))}
         </ul>
-        <div className="drawer-cta-container">
-          <Link to="/contact" className="drawer-cta" onClick={() => setNavOpen(false)}>
-            {t('cta.getInTouch')} →
+
+        <div className="p-6 px-4 pb-5 border-t border-white/8 mt-auto flex flex-col gap-3">
+          <Link to="/contact" className="flex items-center justify-center gap-2 bg-brand-neon text-brand-deep text-sm font-extrabold p-3.5 rounded-xl no-underline transition-all duration-200 hover:bg-[#02c230] w-full" onClick={() => setNavOpen(false)}>
+            {t('nav.reachUs')} →
           </Link>
-        </div>
-        <div className="nav-bottom-row">
-          <button className="lang-btn" onClick={toggleLanguage} title="Switch language">
-            {i18n.language === 'en' ? 'AR' : 'EN'}
-          </button>
-          <a
-            href="https://wa.me/201105710609"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wa-btn"
-            title="WhatsApp"
-          >
-            <FaWhatsapp />
-          </a>
+          
+          <div className="flex items-center justify-between gap-3">
+            <a
+              href="https://wa.me/201105710609"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center flex-1 gap-2 p-2.5 rounded-lg bg-[#25d3661f] text-brand-neon text-[13px] font-bold no-underline transition-all border border-brand-neon/20 hover:bg-[#25d36638] hover:border-brand-neon/40"
+              title="WhatsApp"
+            >
+              <FaWhatsapp className="text-[17px]" />
+              {t('common.whatsapp')}
+            </a>
+            <button 
+              className="inline-flex items-center justify-center w-11 h-11 rounded-lg border border-brand-offwhite/15 bg-transparent text-brand-offwhite/70 text-xs font-bold tracking-wider cursor-pointer transition-all uppercase hover:border-brand-offwhite/35 hover:text-brand-offwhite hover:bg-white/5" 
+              onClick={toggleLanguage} 
+              title="Switch language"
+            >
+              {i18n.language === 'en' ? 'AR' : 'EN'}
+            </button>
+          </div>
         </div>
       </div>
     </>

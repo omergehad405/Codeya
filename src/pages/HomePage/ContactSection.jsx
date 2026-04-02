@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -69,160 +70,68 @@ const contacts = [
     },
 ]
 
-export default function ContactSection() {
+function ContactCard({ contact: c }) {
     return (
-        <section
-            id="contact"
-            style={{
-                background: '#004836',
-                fontFamily: "'DM Sans', sans-serif",
-                padding: 'clamp(100px,12vw,150px) 6vw',
-                position: 'relative',
-                overflow: 'hidden',
-                textAlign: 'center',
-            }}
+        <a
+            href={c.href}
+            target={c.href.startsWith('http') ? '_blank' : undefined}
+            rel="noreferrer"
+            className="group flex flex-col items-center bg-white/6 border border-brand-neon/15 rounded-2xl p-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:bg-brand-neon/10 hover:border-brand-neon/40 w-full"
         >
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,900;1,900&display=swap');
-        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(0.8)} }
-        .contact-pulse { animation: pulse 2s ease-in-out infinite; }
-        .contact-cards { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 16px; 
-            max-width: 900px; 
-            margin: 0 auto; 
-            justify-content: center; 
-        }
-        .contact-card-item {
-            flex: 1 1 210px;
-            min-width: 180px;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        @media (max-width: 900px) {
-            .contact-cards { gap: 12px; }
-            .contact-card-item { flex: 1 1 45%; min-width: 140px;}
-        }
-        @media (max-width: 700px) { 
-            .contact-cards { flex-direction: row; flex-wrap: wrap; gap: 12px; }
-            .contact-card-item { flex: 1 1 100%; min-width: 130px;}
-        }
-      `}</style>
+            <div className="w-11 h-11 rounded-xl bg-brand-neon/12 flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110">
+                {c.icon}
+            </div>
+            <div className="text-[10px] font-bold tracking-widest text-brand-neon/50 mb-1.5 uppercase">
+                {c.type}
+            </div>
+            <div className="text-[11px] font-medium text-white/70 leading-relaxed break-all text-center">
+                {c.val}
+            </div>
+        </a>
+    )
+}
 
+
+export default function ContactSection() {
+    const { t } = useTranslation()
+    return (
+        <section id="contact" className="bg-brand-deep font-sans py-24 px-6 md:py-32 lg:px-12 relative overflow-hidden text-center">
+            
             {/* Radial glow */}
-            <div style={{
-                position: 'absolute', inset: 0, pointerEvents: 'none',
-                background: 'radial-gradient(ellipse at center, rgba(4,217,57,0.06) 0%, transparent 65%)',
-            }} />
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(4,217,57,0.06)_0%,transparent_65%)]" />
 
             {/* Large bg text */}
-            <div style={{
-                position: 'absolute', top: '50%', left: '50%',
-                transform: 'translate(-50%,-50%)',
-                fontFamily: "'Playfair Display', serif",
-                fontSize: 'clamp(120px,20vw,280px)',
-                fontWeight: 900,
-                color: 'rgba(255,255,255,0.02)',
-                whiteSpace: 'nowrap', pointerEvents: 'none',
-                letterSpacing: '-4px',
-            }}>→</div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(120px,20vw,280px)] font-black text-white/[0.02] whitespace-nowrap pointer-events-none tracking-[-4px]">
+                →
+            </div>
 
-            <div style={{ position: 'relative', zIndex: 1 }}>
+            <div className="relative z-[1]">
                 <Reveal>
                     {/* Badge */}
-                    <div style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 8,
-                        background: 'rgba(4,217,57,0.12)',
-                        border: '1px solid rgba(4,217,57,0.3)',
-                        borderRadius: 100, padding: '6px 16px',
-                        fontSize: 12, fontWeight: 700, color: '#04d939',
-                        letterSpacing: '1px', textTransform: 'uppercase',
-                        marginBottom: 24,
-                    }}>
-                        <span className="contact-pulse" style={{
-                            width: 7, height: 7, borderRadius: '50%',
-                            background: '#04d939', display: 'inline-block',
-                        }} />
-                        Get in touch
+                    <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 font-sans text-xs font-bold text-brand-neon tracking-wider uppercase mb-6">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
+                        {t('homePage.contact.getInTouch')}
                     </div>
 
                     {/* Heading */}
-                    <h2 style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: 'clamp(34px,5vw,64px)',
-                        fontWeight: 900, color: '#fff',
-                        lineHeight: 1.05, letterSpacing: '-2px',
-                        marginBottom: 16,
-                    }}>
-                        Ready to Build<br />
-                        <span style={{ color: '#04d939', fontStyle: 'italic' }}>Something Great?</span>
+                    <h2 className="font-serif text-[clamp(34px,5vw,64px)] font-black text-white leading-[1.05] tracking-[-2px] mb-4">
+                        {t('homePage.contact.readyToBuild')}<br />
+                        <span className="text-brand-neon italic">{t('homePage.contact.somethingGreat')}</span>
                     </h2>
 
                     {/* Sub */}
-                    <p style={{
-                        fontSize: 15, color: 'rgba(255,255,255,0.45)',
-                        maxWidth: 440, margin: '0 auto 44px',
-                        lineHeight: 1.8,
-                    }}>
-                        Code Your Agency. Reach out — we'll get back to you within 24 hours
-                        with a clear plan and honest pricing.
+                    <p className="text-[15px] text-white/45 max-w-[440px] mx-auto mb-11 leading-relaxed">
+                        {t('homePage.contact.desc')}
                     </p>
 
                     {/* Cards */}
-                    <div className="contact-cards">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-[1000px] mx-auto justify-items-center">
                         {contacts.map((c, i) => (
-                            <ContactCard key={c.type} contact={c} delay={i * 0.08} />
+                            <ContactCard key={c.type} contact={c} />
                         ))}
                     </div>
                 </Reveal>
             </div>
         </section>
-    )
-}
-
-function ContactCard({ contact: c, delay }) {
-    const [hovered, setHovered] = useState(false)
-    return (
-        <a
-            className="contact-card-item"
-            href={c.href}
-            target={c.href.startsWith('http') ? '_blank' : undefined}
-            rel="noreferrer"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                borderRadius: 16, padding: '24px 16px',
-                textDecoration: 'none',
-                background: hovered ? 'rgba(4,217,57,0.1)' : 'rgba(255,255,255,0.06)',
-                border: `1px solid ${hovered ? 'rgba(4,217,57,0.4)' : 'rgba(4,217,57,0.15)'}`,
-                transform: hovered ? 'translateY(-5px)' : 'translateY(0)',
-                transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
-                boxSizing: 'border-box'
-            }}
-        >
-            <div style={{
-                width: 44, height: 44, borderRadius: 12,
-                background: 'rgba(4,217,57,0.12)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: 12,
-            }}>
-                {c.icon}
-            </div>
-            <div style={{
-                fontSize: 10, fontWeight: 700, letterSpacing: '1.5px',
-                color: 'rgba(4,217,57,0.5)', marginBottom: 6,
-                textTransform: 'uppercase',
-            }}>
-                {c.type}
-            </div>
-            <div style={{
-                fontSize: 11, fontWeight: 500, color: 'rgba(255,255,255,0.7)',
-                lineHeight: 1.4, wordBreak: 'break-all', textAlign: 'center',
-            }}>
-                {c.val}
-            </div>
-        </a>
     )
 }

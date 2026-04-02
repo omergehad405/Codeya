@@ -1,25 +1,74 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-deep: #004836;
+  --color-brand-neon: #04d939;
+  --color-brand-light: #f7fbf8;
+  --color-brand-offwhite: #eef3e4;
+  --color-brand-dark: #0a1a10;
+  --color-brand-border: #e4ede8;
+  
+  --font-sans: "DM Sans", "Segoe UI", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  --animate-pulse-slow: pulse 2s ease-in-out infinite;
+  --animate-spin-slow: spin 3s linear infinite;
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes gridShift {
+    0%, 100% { background-position: 0 0; }
+    50% { background-position: 10px 10px; }
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  @keyframes imageFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  @keyframes shadowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.2); opacity: 0.2; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+
 @layer base {
+  :root {
+    --brand-deep: #004836;
+    --brand-neon: #04d939;
+    --brand-light: #f7fbf8;
+    --brand-offwhite: #eef3e4;
+    --brand-dark: #0a1a10;
+    --brand-border: #e4ede8;
+  }
+
   * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
-    font-family: "Bree Serif", serif;
+  }
+
+  body {
+    background-color: var(--brand-light);
+    color: var(--brand-dark);
+    font-family: var(--font-sans);
   }
 }
 
 @custom-variant hover (&:hover);
 
-:root {
-  --main-color: #eef3e4;
-  --second-color: #004836;
-  --background-color: #012340;
-  --text-color: #04d939;
-}
-
-body {
-  background-color: var(--main-color);
-}

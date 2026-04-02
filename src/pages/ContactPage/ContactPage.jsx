@@ -1,186 +1,24 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import emailjs from '@emailjs/browser'
 import { EMAIL_CONFIG } from '../../utils/Emailjs'
 
-const servicesList = [
-    { key: "web", label: "Web Dev", icon: "./services/webDevelopment.png" },
-    { key: "mobile", label: "Mobile App", icon: "./services/mobileDevelopment.png" },
-    { key: "seo", label: "SEO", icon: "./services/seoOptomization.png" },
-    { key: "uiux", label: "UI / UX", icon: "./services/ui_ux.png" },
-    { key: "backend", label: "Backend & APIs", icon: "./services/backend-api.png" },
-]
 
-const styles = {
-    section: {
-        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
-        padding: '2.5rem 1rem',
-        minHeight: '100vh',
-    },
-    topLabel: {
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 8,
-        background: '#eef9f1',
-        border: '1px solid #c6ecd1',
-        borderRadius: 30,
-        padding: '5px 14px',
-        fontSize: 12,
-        fontWeight: 600,
-        color: '#006648',
-        letterSpacing: 0.5,
-        marginBottom: 16,
-    },
-    dot: {
-        width: 7, height: 7,
-        borderRadius: '50%',
-        background: '#04d939',
-        animation: 'pulse 1.8s ease-in-out infinite',
-    },
-    hero: {
-        fontSize: 'clamp(32px, 6vw, 52px)',
-        fontWeight: 800,
-        color: '#0a1a10',
-        lineHeight: 1.1,
-        marginBottom: '0.5rem',
-        letterSpacing: -1,
-    },
-    heroAccent: { color: '#004836' },
-    sub: {
-        fontSize: 14,
-        color: '#6b8f7a',
-        marginBottom: '2rem',
-        maxWidth: 400,
-        lineHeight: 1.6,
-    },
-    layout: {
-        display: 'grid',
-        gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.4fr)',
-        gap: 24,
-        alignItems: 'start',
-    },
-    leftPanel: {
-        background: '#004836',
-        borderRadius: 20,
-        padding: '2rem',
-        color: '#fff',
-    },
-    leftTitle: {
-        fontSize: 13,
-        fontWeight: 700,
-        letterSpacing: 1,
-        color: '#04d939',
-        textTransform: 'uppercase',
-        marginBottom: 16,
-    },
-    statRow: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16,
-    },
-    statBox: {
-        background: 'rgba(255,255,255,0.07)',
-        borderRadius: 12,
-        padding: '1rem',
-        borderLeft: '3px solid #04d939',
-    },
-    statNum: { fontSize: 28, fontWeight: 800, color: '#04d939', lineHeight: 1 },
-    statLabel: { fontSize: 12, color: '#a3c4b0', marginTop: 4 },
-    contactInfo: {
-        marginTop: 24,
-        paddingTop: 20,
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-    },
-    contactRow: {
-        display: 'flex', alignItems: 'center', gap: 10,
-        fontSize: 13, color: '#d4ede3', marginBottom: 10,
-    },
-    iconCircle: {
-        width: 28, height: 28, borderRadius: '50%',
-        background: 'rgba(4,217,57,0.15)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 13, color: '#04d939',
-    },
-    rightPanel: {
-        background: '#fff',
-        borderRadius: 20,
-        border: '1.5px solid #e8f0eb',
-        overflow: 'hidden',
-    },
-    formHeader: {
-        padding: '1.2rem 1.5rem',
-        borderBottom: '1px solid #f0f5f2',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    stepLabel: { fontSize: 14, fontWeight: 600, color: '#1a3a2e' },
-    stepPills: { display: 'flex', gap: 4 },
-    formBody: { padding: '1.5rem' },
-    inputField: {
-        width: '100%',
-        border: '1.5px solid #e0ede6',
-        borderRadius: 10,
-        padding: '11px 14px',
-        fontSize: 13,
-        color: '#1a3a2e',
-        background: '#fafdfb',
-        outline: 'none',
-        marginBottom: 10,
-        fontFamily: 'inherit',
-    },
-    chip: (selected) => ({
-        border: `1.5px solid ${selected ? '#004836' : '#ddeee5'}`,
-        borderRadius: 8,
-        padding: '9px 14px',
-        fontSize: 12,
-        fontWeight: 600,
-        color: selected ? '#fff' : '#004836',
-        background: selected ? '#004836' : '#f6fbf8',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 6,
-        transition: 'all .15s',
-    }),
-    textarea: {
-        width: '100%',
-        border: '1.5px solid #e0ede6',
-        borderRadius: 10,
-        padding: '11px 14px',
-        fontSize: 13,
-        color: '#1a3a2e',
-        background: '#fafdfb',
-        outline: 'none',
-        resize: 'none',
-        fontFamily: 'inherit',
-        minHeight: 100,
-    },
-    btnPrimary: {
-        background: '#004836',
-        color: '#fff',
-        border: 'none',
-        borderRadius: 10,
-        padding: '10px 22px',
-        fontSize: 13,
-        fontWeight: 700,
-        cursor: 'pointer',
-        letterSpacing: 0.3,
-    },
-    btnSecondary: {
-        background: 'transparent',
-        color: '#004836',
-        border: '1.5px solid #c8ddd4',
-        borderRadius: 10,
-        padding: '10px 18px',
-        fontSize: 13,
-        fontWeight: 600,
-        cursor: 'pointer',
-    },
-}
 
 export default function ContactPage() {
+    const { t } = useTranslation()
     const [step, setStep] = useState(1)
+
+    const servicesList = [
+        { key: "web", label: t('contactPage.step2.servicesList.web'), icon: "./services/webDevelopment.png" },
+        { key: "mobile", label: t('contactPage.step2.servicesList.mobile'), icon: "./services/mobileDevelopment.png" },
+        { key: "seo", label: t('contactPage.step2.servicesList.seo'), icon: "./services/seoOptomization.png" },
+        { key: "uiux", label: t('contactPage.step2.servicesList.uiux'), icon: "./services/ui_ux.png" },
+        { key: "backend", label: t('contactPage.step2.servicesList.backend'), icon: "./services/backend-api.png" },
+    ]
+
+    const stepTitles = t('contactPage.steps', { returnObjects: true })
     const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', services: [], message: '' })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -218,7 +56,7 @@ export default function ContactPage() {
             )
             setStep(4)
         } catch (err) {
-            setError('Something went wrong. Please try again.')
+            setError(t('contactPage.step3.err'))
         } finally {
             setLoading(false)
         }
@@ -230,81 +68,69 @@ export default function ContactPage() {
         setStep(1)
     }
 
-    const stepTitles = ['Your info', 'Services', 'Message', 'Done!']
-    const PHONE_NUMBER = '+1 (234) 567-8910' // <- you can edit to your real contact number
+    const PHONE_NUMBER = '+1 (234) 567-8910'
 
     return (
-        <section style={styles.section}>
-            <style>{`
-                @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-                @keyframes spin { to { transform: rotate(360deg); } }
-                @media(max-width:640px){
-                    .contact-layout { grid-template-columns: 1fr !important; }
-                    .left-panel { display: none; }
-                }
-            `}</style>
-
+        <section className="font-sans py-10 px-4 min-h-screen bg-brand-light">
             {/* Top badge */}
-            <div style={styles.topLabel}>
-                <div style={styles.dot} />
-                Available for new projects
+            <div className="inline-flex items-center gap-2 bg-[#eef9f1] border border-[#c6ecd1] rounded-full px-3.5 py-1 text-xs font-semibold text-[#006648] tracking-wider mb-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
+                {t('contactPage.badge')}
             </div>
 
             {/* Hero */}
-            <h1 style={styles.hero}>
-                Let's build something<br />
-                <span style={styles.heroAccent}>great together.</span>
+            <h1 className="text-[clamp(32px,6vw,52px)] font-black text-brand-dark leading-none tracking-tight mb-2">
+                {t('contactPage.title1')}<br />
+                <span className="text-brand-deep">{t('contactPage.title2')}</span>
             </h1>
-            <p style={styles.sub}>Tell us about your project and we'll get back to you within 24 hours.</p>
+            <p className="text-sm text-[#6b8f7a] mb-8 max-w-[400px] leading-relaxed">
+                {t('contactPage.sub')}
+            </p>
 
             {/* Layout */}
-            <div style={styles.layout} className="contact-layout">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-6 items-start max-w-[1280px] mx-auto">
 
                 {/* Left Panel */}
-                <div style={styles.leftPanel} className="left-panel">
-                    <div style={styles.leftTitle}>Why choose us</div>
-                    <div style={styles.statRow}>
+                <div className="hidden md:block bg-brand-deep rounded-2xl p-8 text-white h-full">
+                    <div className="text-[13px] font-bold tracking-widest text-brand-neon uppercase mb-4">
+                        {t('contactPage.whyChooseUs')}
+                    </div>
+                    <div className="flex flex-col gap-4 mb-8">
                         {[
-                            { num: '2+', label: 'Projects delivered' },
-                            { num: '98%', label: 'Client satisfaction' },
-                            { num: '24h', label: 'Response time' },
+                            { num: '2+', label: t('contactPage.stats.projects') },
+                            { num: '98%', label: t('contactPage.stats.satisfaction') },
+                            { num: '24h', label: t('contactPage.stats.response') },
                         ].map(s => (
-                            <div key={s.num} style={styles.statBox}>
-                                <div style={styles.statNum}>{s.num}</div>
-                                <div style={styles.statLabel}>{s.label}</div>
+                            <div key={s.num} className="bg-white/7 rounded-xl p-4 border-l-4 border-brand-neon">
+                                <div className="text-[28px] font-black text-brand-neon leading-none">{s.num}</div>
+                                <div className="text-[12px] text-[#a3c4b0] mt-1 uppercase tracking-wider">{s.label}</div>
                             </div>
                         ))}
                     </div>
 
-                    <div style={styles.contactInfo}>
-                        <div style={styles.contactRow}>
-                            <div style={styles.iconCircle}>@</div>
-                            <a href="mailto:codeyaa01@gmail.com" style={{ color: '#d4ede3', textDecoration: 'none', fontSize: 13 }}>
+                    <div className="pt-6 border-t border-white/10 space-y-3">
+                        <div className="flex items-center gap-3 text-[13px] text-[#d4ede3]">
+                            <div className="w-7 h-7 rounded-full bg-brand-neon/15 flex items-center justify-center text-brand-neon">@</div>
+                            <a href="mailto:codeyaa01@gmail.com" className="hover:text-brand-neon transition-colors">
                                 codeyaa01@gmail.com
                             </a>
                         </div>
-                        <div style={styles.contactRow}>
-                            <div style={styles.iconCircle}>
-                                <FaPhoneAlt />
+                        <div className="flex items-center gap-3 text-[13px] text-[#d4ede3]">
+                            <div className="w-7 h-7 rounded-full bg-brand-neon/15 flex items-center justify-center text-brand-neon">
+                                <FaPhoneAlt size={12} />
                             </div>
-                            <a href={`tel:${PHONE_NUMBER.replace(/[^+\d]/g, "")}`} style={{ color: '#d4ede3', textDecoration: 'none', fontSize: 13 }}>
+                            <a href={`tel:${PHONE_NUMBER.replace(/[^+\d]/g, "")}`} className="hover:text-brand-neon transition-colors">
                                 {PHONE_NUMBER}
                             </a>
                         </div>
-                        <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                        <div className="flex gap-2 mt-4">
                             {[
                                 { icon: <FaFacebookF />, href: "https://www.facebook.com/profile.php?id=61578461982344" },
                                 { icon: <FaWhatsapp />, href: "https://wa.me/" },
                                 { icon: <FaInstagram />, href: "https://www.instagram.com/codeyaa01/" },
                             ].map((s, i) => (
                                 <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                                    style={{
-                                        width: 34, height: 34, borderRadius: '50%',
-                                        background: 'rgba(255,255,255,0.08)',
-                                        border: '1px solid rgba(255,255,255,0.12)',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        color: '#a3c4b0', fontSize: 14, textDecoration: 'none'
-                                    }}>
+                                    className="w-[34px] h-[34px] rounded-full bg-white/8 border border-white/12 flex items-center justify-center text-[#a3c4b0] text-[14px] hover:bg-brand-neon hover:text-brand-deep hover:border-brand-neon transition-all duration-300">
                                     {s.icon}
                                 </a>
                             ))}
@@ -313,37 +139,37 @@ export default function ContactPage() {
                 </div>
 
                 {/* Right Panel - Form */}
-                <div style={styles.rightPanel}>
-                    <div style={styles.formHeader}>
-                        <span style={styles.stepLabel}>{stepTitles[step - 1]}</span>
-                        <div style={styles.stepPills}>
+                <div className="bg-white rounded-2xl border border-[#e8f0eb] overflow-hidden shadow-sm">
+                    <div className="px-6 py-5 border-b border-[#f0f5f2] flex justify-between items-center">
+                        <span className="text-sm font-semibold text-[#1a3a2e]">{stepTitles[step - 1]}</span>
+                        <div className="flex gap-1">
                             {[1, 2, 3].map(i => (
-                                <div key={i} style={{
-                                    height: 6,
-                                    width: i <= Math.min(step, 3) ? 20 : 6,
-                                    borderRadius: 4,
-                                    background: i <= Math.min(step, 3) ? '#04d939' : '#e0ede6',
-                                    transition: 'all .3s'
-                                }} />
+                                <div key={i} 
+                                    className={`h-1.5 rounded-full transition-all duration-300 
+                                    ${i <= Math.min(step, 3) ? 'w-5 bg-brand-neon' : 'w-1.5 bg-[#e0ede6]'}`} 
+                                />
                             ))}
                         </div>
                     </div>
 
-                    <div style={styles.formBody}>
+                    <div className="p-6">
                         {step <= 3 && (
-                            <form onSubmit={handleSubmit} autoComplete="off">
+                            <form onSubmit={handleSubmit} autoComplete="off" className="space-y-3">
 
                                 {/* Step 1 - Info */}
                                 {step === 1 && (
-                                    <div>
-                                        <p style={{ fontSize: 12, color: '#7aab96', marginBottom: 12 }}>Hi 👋, tell us about yourself</p>
-                                        <input style={styles.inputField} type="text" name="name" value={form.name} onChange={handleChange} placeholder="Full Name *" required />
-                                        <input style={styles.inputField} type="text" name="company" value={form.company} onChange={handleChange} placeholder="Company Name" />
-                                        <input style={styles.inputField} type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email Address *" required />
-                                        <input style={styles.inputField} type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number" />
-                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                            <button type="button" onClick={() => setStep(2)} disabled={!form.name || !form.email} style={styles.btnPrimary}>
-                                                Continue →
+                                    <div className="animate-fadeIn">
+                                        <p className="text-[12px] text-[#7aab96] mb-3">{t('contactPage.step1.hi')}</p>
+                                        <div className="space-y-2.5 mb-6">
+                                            <input className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors" type="text" name="name" value={form.name} onChange={handleChange} placeholder={t('contactPage.step1.name')} required />
+                                            <input className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors" type="text" name="company" value={form.company} onChange={handleChange} placeholder={t('contactPage.step1.company')} />
+                                            <input className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors" type="email" name="email" value={form.email} onChange={handleChange} placeholder={t('contactPage.step1.email')} required />
+                                            <input className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors" type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('contactPage.step1.phone')} />
+                                        </div>
+                                        <div className="flex justify-end">
+                                            <button type="button" onClick={() => setStep(2)} disabled={!form.name || !form.email} 
+                                                className="bg-brand-deep text-white rounded-xl px-6 py-2.5 text-sm font-bold tracking-tight disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-dark transition-colors">
+                                                {t('contactPage.step1.btn')}
                                             </button>
                                         </div>
                                     </div>
@@ -351,64 +177,53 @@ export default function ContactPage() {
 
                                 {/* Step 2 - Services */}
                                 {step === 2 && (
-                                    <div>
-                                        <p style={{ fontSize: 12, color: '#7aab96', marginBottom: 12 }}>What can we help you with?</p>
-                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+                                    <div className="animate-fadeIn">
+                                        <p className="text-[12px] text-[#7aab96] mb-3">{t('contactPage.step2.title')}</p>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
                                             {servicesList.map(({ key, label, icon }) => (
-                                                <button key={key} type="button" onClick={() => toggleService(key)} style={styles.chip(form.services.includes(key))}>
-                                                    <img src={icon} alt="" style={{ width: 16, height: 16 }} />
+                                                <button key={key} type="button" onClick={() => toggleService(key)} 
+                                                    className={`transition-all duration-150 border rounded-lg px-4 py-2.5 text-xs font-semibold flex items-center gap-2
+                                                    ${form.services.includes(key) ? 'border-brand-deep bg-brand-deep text-white shadow-md' : 'border-[#ddeee5] bg-[#f6fbf8] text-brand-deep hover:border-brand-neon'}`}>
+                                                    <img src={icon} alt="" className="w-4 h-4 brightness-100 contrast-125" />
                                                     {label}
                                                 </button>
                                             ))}
                                         </div>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <button type="button" onClick={() => setStep(1)} style={styles.btnSecondary}>← Back</button>
-                                            <button type="button" onClick={() => setStep(3)} disabled={form.services.length === 0} style={styles.btnPrimary}>Continue →</button>
+                                        <div className="flex justify-between">
+                                            <button type="button" onClick={() => setStep(1)} className="bg-transparent text-brand-deep border border-[#c8ddd4] rounded-xl px-5 py-2.5 text-sm font-semibold hover:bg-brand-light transition-colors">{t('contactPage.step2.back')}</button>
+                                            <button type="button" onClick={() => setStep(3)} disabled={form.services.length === 0} className="bg-brand-deep text-white rounded-xl px-6 py-2.5 text-sm font-bold tracking-tight disabled:opacity-50 hover:bg-brand-dark transition-colors">{t('contactPage.step2.btn')}</button>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Step 3 - Message */}
                                 {step === 3 && (
-                                    <div>
-                                        <p style={{ fontSize: 12, color: '#7aab96', marginBottom: 8 }}>Any additional details?</p>
-                                        <textarea style={styles.textarea} name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your project, timeline, budget..." rows={4} />
+                                    <div className="animate-fadeIn">
+                                        <p className="text-[12px] text-[#7aab96] mb-2">{t('contactPage.step3.title')}</p>
+                                        <textarea className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors resize-none min-h-[120px]" name="message" value={form.message} onChange={handleChange} placeholder={t('contactPage.step3.placeholder')} rows={4} />
 
-                                        {/* Error message */}
                                         {error && (
-                                            <p style={{ fontSize: 12, color: '#e53e3e', marginTop: 8, marginBottom: 0 }}>
+                                            <p className="text-[12px] text-red-500 mt-2 flex items-center gap-1">
                                                 ⚠️ {error}
                                             </p>
                                         )}
 
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 12 }}>
-                                            <button type="button" onClick={() => setStep(2)} style={styles.btnSecondary} disabled={loading}>← Back</button>
+                                        <div className="flex justify-between mt-4">
+                                            <button type="button" onClick={() => setStep(2)} className="bg-transparent text-brand-deep border border-[#c8ddd4] rounded-xl px-5 py-2.5 text-sm font-semibold disabled:opacity-50 hover:bg-brand-light transition-colors" disabled={loading}>
+                                                {t('contactPage.step3.back')}
+                                            </button>
                                             <button
                                                 type="submit"
                                                 disabled={loading}
-                                                style={{
-                                                    ...styles.btnPrimary,
-                                                    background: loading ? '#a3c4b0' : '#04d939',
-                                                    color: '#004836',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 8,
-                                                    cursor: loading ? 'not-allowed' : 'pointer',
-                                                }}
+                                                className={`flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-black tracking-tight transition-all
+                                                ${loading ? 'bg-[#a3c4b0] text-brand-deep cursor-not-allowed' : 'bg-brand-neon text-brand-deep hover:scale-105 shadow-lg'}`}
                                             >
                                                 {loading ? (
                                                     <>
-                                                        <span style={{
-                                                            width: 14, height: 14,
-                                                            border: '2px solid #004836',
-                                                            borderTopColor: 'transparent',
-                                                            borderRadius: '50%',
-                                                            display: 'inline-block',
-                                                            animation: 'spin 0.7s linear infinite'
-                                                        }} />
-                                                        Sending...
+                                                        <span className="w-3.5 h-3.5 border-2 border-brand-deep border-t-transparent rounded-full animate-spin" />
+                                                        {t('contactPage.step3.sending')}
                                                     </>
-                                                ) : 'Send Message ✓'}
+                                                ) : t('contactPage.step3.btnText')}
                                             </button>
                                         </div>
                                     </div>
@@ -418,23 +233,16 @@ export default function ContactPage() {
 
                         {/* Step 4 - Success */}
                         {step === 4 && (
-                            <div style={{ textAlign: 'center', padding: '1rem 0' }}>
-                                <div style={{
-                                    width: 64, height: 64,
-                                    background: '#eef9f1',
-                                    borderRadius: '50%',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    margin: '0 auto 1rem',
-                                    fontSize: 28,
-                                }}>🎉</div>
-                                <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0a1a10', marginBottom: 8 }}>
-                                    Message sent!
+                            <div className="text-center py-4 animate-fadeIn">
+                                <div className="w-16 h-16 bg-[#eef9f1] rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🎉</div>
+                                <h2 className="text-xl font-black text-brand-dark mb-2">
+                                    {t('contactPage.step4.sent')}
                                 </h2>
-                                <p style={{ fontSize: 13, color: '#6b8f7a', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                                    We've received your message and will get<br />back to you within 24 hours.
+                                <p className="text-sm text-[#6b8f7a] mb-6 leading-relaxed">
+                                    {t('contactPage.step4.p1')}<br />{t('contactPage.step4.p2')}
                                 </p>
-                                <button onClick={handleClose} style={{ ...styles.btnPrimary, padding: '10px 28px' }}>
-                                    Send another
+                                <button onClick={handleClose} className="bg-brand-deep text-white rounded-xl px-8 py-2.5 text-sm font-bold tracking-tight hover:bg-brand-dark transition-colors">
+                                    {t('contactPage.step4.another')}
                                 </button>
                             </div>
                         )}
@@ -443,4 +251,4 @@ export default function ContactPage() {
             </div>
         </section>
     )
-}
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function Counter({ target, suffix = '' }) {
     const [val, setVal] = useState(0)
@@ -21,68 +22,36 @@ function Counter({ target, suffix = '' }) {
     return <span ref={ref}>{val}{suffix}</span>
 }
 
-const stats = [
-    { num: 2, suffix: '+', label: 'PROJECTS COMPLETED' },
-    { num: 98, suffix: '%', label: 'CLIENT SATISFACTION' },
-    { num: 1, suffix: 'yr', label: 'IN THE INDUSTRY' },
-    { num: 24, suffix: 'h', label: 'RESPONSE TIME' },
-]
+
 
 export default function StatsBand() {
+    const { t } = useTranslation()
+
+    const statsData = [
+        { num: 2, suffix: '+', label: t('homePage.stats.projectsComp') },
+        { num: 98, suffix: '%', label: t('homePage.stats.clientSat') },
+        { num: 1, suffix: 'yr', label: t('homePage.stats.industry') },
+        { num: 24, suffix: 'h', label: t('homePage.stats.responseTime') },
+    ]
+
     return (
-        <div
-            className="stats-band-flex"
-            style={{
-                background: '#004836',
-                fontFamily: "'DM Sans', sans-serif",
-                display: 'flex',
-                flexWrap: 'wrap',
-            }}
-        >
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Playfair+Display:wght@900&display=swap');
-        .stats-band-flex { 
-          display: flex;
-          flex-wrap: wrap;
-        }
-        .stats-band-item {
-          flex: 1 1 25%;
-        }
-        @media (max-width: 700px) {
-          .stats-band-flex { flex-wrap: wrap; }
-          .stats-band-item { flex: 1 1 50%; }
-        }
-      `}</style>
-            {stats.map((s, i) => (
+        <div className="bg-brand-deep font-sans grid grid-cols-2 lg:grid-cols-4">
+            {statsData.map((s, i) => (
                 <div
                     key={s.label}
-                    className="stats-band-item"
-                    style={{
-                        display: 'flex', flexDirection: 'column',
-                        alignItems: 'center', justifyContent: 'center',
-                        padding: 'clamp(40px,6vw,60px) 20px',
-                        borderRight: i % 2 === 0 && i !== stats.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
-                        borderBottom: i < 2 ? (window.innerWidth <= 700 ? '1px solid rgba(255,255,255,0.07)' : 'none') : 'none'
-                    }}
+                    className={`flex flex-col items-center justify-center py-10 lg:py-16 px-5 border-white/5 
+                        ${i % 2 === 0 ? 'border-r' : ''} 
+                        ${i < 2 ? 'border-b lg:border-b-0' : ''} 
+                        ${i === 2 ? 'lg:border-r' : ''}`}
                 >
-                    <div style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: 'clamp(36px,5vw,52px)',
-                        fontWeight: 900, color: '#04d939',
-                        letterSpacing: '-2px', lineHeight: 1,
-                    }}>
+                    <div className="font-serif text-[clamp(36px,5vw,52px)] font-black text-brand-neon tracking-tight leading-none">
                         <Counter target={s.num} suffix={s.suffix} />
                     </div>
-                    <div style={{
-                        fontSize: 11, fontWeight: 700,
-                        color: 'rgba(255,255,255,0.35)',
-                        letterSpacing: '2.5px', marginTop: 10,
-                        textTransform: 'uppercase',
-                    }}>
+                    <div className="text-[11px] font-bold text-white/35 tracking-[2.5px] mt-2.5 uppercase">
                         {s.label}
                     </div>
                 </div>
             ))}
         </div>
     )
-}
+}

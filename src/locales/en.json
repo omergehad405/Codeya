@@ -4,7 +4,8 @@
       "home": "Home",
       "about": "About",
       "projects": "Projects",
-      "contact": "Contact"
+      "contact": "Contact",
+      "reachUs": "Reach Us"
     },
     "cta": {
       "getInTouch": "Get in touch"
@@ -29,26 +30,42 @@
       "phone": "Phone"
     },
     "projectsPage": {
+      "hero": {
+        "bg": "PROJECTS",
+        "corner": "Est. 2026",
+        "badge": "Our Work",
+        "title1": "We build",
+        "title2": "digital",
+        "title3": "futures.",
+        "sub": "Every project we ship is one we're proud of — from the first spark of an idea to the very last line of code.",
+        "scroll": "Explore projects"
+      },
+      "portfolio": "Portfolio",
+      "workTitle1": "Work we're",
+      "workTitle2": "proud of.",
       "filters": {
         "all": "All",
         "websites": "Websites",
-        "landingPage": "Landing Pages",
-        "eCommerce": "eCommerce",
-        "mobileApp": "Mobile Apps"
+        "landing": "Landing Pages",
+        "ecommerce": "eCommerce",
+        "mobile": "Mobile Apps"
       },
-      "section": {
-        "title": "Our",
-        "accent": "Work"
+      "labels": {
+        "websites": "Website",
+        "landing": "Landing Page",
+        "ecommerce": "eCommerce",
+        "mobile": "Mobile App"
       },
-      "heroTagline": {
-        "title": "Every project is a success story —",
-        "subtitle": "Let’s write your story with us."
-      },
+      "empty": "No projects in this category yet — stay tuned.",
       "cta": {
-        "headline": "Your next project is here 🚀",
-        "paragraph": "Contact us now and start your digital journey",
-        "button": "Contact Us ✦"
-      }
+        "badge": "Get in touch",
+        "title1": "Your next project",
+        "title2": "starts here.",
+        "sub": "Got an idea? We'll turn it into a digital product that exceeds your expectations.",
+        "btn": "Start a project →"
+      },
+      "viewProject": "View Project",
+      "comingSoon": "Coming Soon"
     },
     "sectionHeader": {
       "title": "Page Title",
@@ -57,6 +74,226 @@
     "projectsCards": {
       "viewProject": "View Project",
       "comingSoon": "Coming soon"
-    }
+    },
+    "homePage": {
+      "hero": {
+        "available": "Available for new projects",
+        "title1": "Build Bold.",
+        "title2": "Ship Fast.",
+        "title3": "Win Big.",
+        "desc": "We turn your ideas into digital products that wow your audience and deliver real results — with clean code, smart design, and on-time delivery.",
+        "contactNow": "Contact us now",
+        "seeOurWork": "See our work",
+        "scroll": "Scroll to explore",
+        "availableNow": "Available now",
+        "tags": {
+          "web": "Web Development",
+          "uiux": "UI / UX Design",
+          "backend": "Backend & APIs",
+          "mobile": "Mobile-First",
+          "perf": "Performance",
+          "react": "React & Next.js",
+          "node": "Node.js",
+          "clean": "Clean Code"
+        }
+      },
+      "stats": {
+        "projectsComp": "PROJECTS COMPLETED",
+        "clientSat": "CLIENT SATISFACTION",
+        "industry": "IN THE INDUSTRY",
+        "responseTime": "RESPONSE TIME"
+      },
+      "about": {
+        "portfolio": "Portfolio",
+        "weAre": "We Are",
+        "agency": "Agency.",
+        "p1": "We're a passionate team of developers and designers who believe that great digital products don't happen by accident — they're built with intention, craft, and honest communication.",
+        "p2a": "Founded with the mission of ",
+        "p2b": "\"Code Your Agency\"",
+        "p2c": " — we help businesses of all sizes take control of their digital presence.",
+        "pillars": {
+          "clean": "Clean Code",
+          "onTime": "On-Time Delivery",
+          "honest": "Honest Pricing",
+          "support": "Full Support"
+        },
+        "ourMission": "// OUR MISSION",
+        "missionP1": "We build digital products that ",
+        "missionP2": "actually work",
+        "missionP3": " — and look great doing it.",
+        "miniStats": {
+          "projects": "Projects",
+          "satisfied": "Satisfied",
+          "experience": "Experience"
+        },
+        "alwaysImproving": "Always Improving",
+        "latestTech": "Latest tech stack",
+        "founded": "FOUNDED"
+      },
+      "services": {
+        "whatWeDo": "What We Do",
+        "our": "Our ",
+        "services": "Services.",
+        "desc": "Everything you need to bring your digital product to life — designed and engineered with care.",
+        "list": {
+          "web": {
+            "title": "Web Development",
+            "desc": "Fast, responsive websites and web apps built with modern technologies that scale with your business goals."
+          },
+          "uiux": {
+            "title": "UI / UX Design",
+            "desc": "Beautiful, user-centered interfaces that convert visitors into customers and keep them coming back for more."
+          },
+          "backend": {
+            "title": "Backend & APIs",
+            "desc": "Robust server-side solutions, databases, and API integrations that power your digital products reliably."
+          },
+          "mobile": {
+            "title": "Mobile App Services",
+            "desc": "End-to-end development of powerful and user-friendly mobile applications for iOS and Android."
+          },
+          "perf": {
+            "title": "Performance Tuning",
+            "desc": "Speed matters. We audit, optimize, and ensure every millisecond counts for your user experience and SEO."
+          },
+          "support": {
+            "title": "Maintenance & Support",
+            "desc": "We don't disappear after launch. Ongoing support, updates, and monitoring keep your product running smoothly."
+          }
+        }
+      },
+      "projects": {
+        "portfolio": "Portfolio",
+        "workWeAre": "Work we're ",
+        "proudOf": "proud of.",
+        "viewAll": "View all projects"
+      },
+      "testimonials": {
+        "clientLove": "Client Love",
+        "whatClients": "What Clients ",
+        "say": "Say.",
+        "comingSoon": "Coming Soon",
+        "soonDesc": "We'll be publishing client reviews and amazing stories here soon. Stay tuned for authentic testimonials!"
+      },
+      "contact": {
+        "getInTouch": "Get in touch",
+        "readyToBuild": "Ready to Build",
+        "somethingGreat": "Something Great?",
+        "desc": "Code Your Agency. Reach out — we'll get back to you within 24 hours with a clear plan and honest pricing."
+      }
+    },
+    "aboutPage": {
+      "stats": {
+        "projects": "Projects Shipped",
+        "satisfaction": "Client Satisfaction",
+        "years": "Years Building",
+        "response": "Avg. Response Time"
+      },
+      "values": {
+        "speedTitle": "Speed without shortcuts",
+        "speedDesc": "We move fast — but never at the cost of quality. Every line of code matters.",
+        "transparencyTitle": "Radical transparency",
+        "transparencyDesc": "No fluff, no hidden costs. You always know where your project stands.",
+        "partnersTitle": "Partners, not vendors",
+        "partnersDesc": "We treat your business like it's ours. Your win is our win.",
+        "scaleTitle": "Built to scale",
+        "scaleDesc": "We architect with growth in mind. What we build today handles tomorrow."
+      },
+      "hero": {
+        "badge": "Our Story",
+        "title1": "We build",
+        "title2": "digital",
+        "title3": "futures.",
+        "sub": "Codeyaa is a brand-new software studio with bold ambitions. We're a startup born to move fast, craft quality, and help you win. Size doesn't scare us — it keeps us sharp. Let's grow together.",
+        "scroll": "Scroll to explore"
+      },
+      "story": {
+        "tag": "Our story",
+        "title1": "Fresh ideas.",
+        "title2": "Startup energy.",
+        "p1": "Codeyaa was founded in",
+        "p1part2": ", right in the heart of the digital era's next wave. We believe that startups—like yours—deserve tech partners who are as fast, motivated, and hungry as they are.",
+        "p2": "We're a new team, but we move with the urgency and imagination that modern business demands. Side by side, we’ll turn scrappy beginnings into amazing launches, products, and results.",
+        "p3": "If you want a team that's all-in on your vision, driven for impact, and unrestrained by \"the old ways\" — let’s make something powerful together.",
+        "quote": "\"We're a startup just like you — ready to build the future, one line at a time.\"",
+        "author": "— The Codeyaa Team",
+        "floatingTag": "Startup Energy ⚡"
+      },
+      "principles": {
+        "tag": "What drives us",
+        "title1": "Built on ",
+        "title2": "principles."
+      },
+      "cta": {
+        "title1": "Ready to build",
+        "title2": "something great?",
+        "sub": "Let's turn your idea into a product people love.",
+        "btn": "Start a project →"
+      }
+    },
+    "contactPage": {
+      "badge": "Available for new projects",
+      "title1": "Let's build something",
+      "title2": "great together.",
+      "sub": "Tell us about your project and we'll get back to you within 24 hours.",
+      "whyChooseUs": "Why choose us",
+      "stats": {
+        "projects": "Projects delivered",
+        "satisfaction": "Client satisfaction",
+        "response": "Response time"
+      },
+      "steps": [
+        "Your info",
+        "Services",
+        "Message",
+        "Done!"
+      ],
+      "step1": {
+        "hi": "Hi 👋, tell us about yourself",
+        "name": "Full Name *",
+        "company": "Company Name",
+        "email": "Email Address *",
+        "phone": "Phone Number",
+        "btn": "Continue →"
+      },
+      "step2": {
+        "title": "What can we help you with?",
+        "back": "← Back",
+        "btn": "Continue →",
+        "servicesList": {
+          "web": "Web Dev",
+          "mobile": "Mobile App",
+          "seo": "SEO",
+          "uiux": "UI / UX",
+          "backend": "Backend & APIs"
+        }
+      },
+      "step3": {
+        "title": "Any additional details?",
+        "placeholder": "Tell us about your project, timeline, budget...",
+        "sending": "Sending...",
+        "btnText": "Send Message ✓",
+        "back": "← Back",
+        "err": "Something went wrong. Please try again."
+      },
+      "step4": {
+        "sent": "Message sent!",
+        "p1": "We've received your message and will get",
+        "p2": "back to you within 24 hours.",
+        "another": "Send another"
+      }
+    },
+    "projectsData": [
+      {
+        "id": 1,
+        "title": "Afaq Al Tareq",
+        "description": "A modern, interactive showcase built for Afaq Al Tareq — a professional design that reflects their brand identity."
+      },
+      {
+        "id": 2,
+        "title": "The New Muslims",
+        "description": "A full-featured website for new Muslims — combining simplicity with rich, meaningful content."
+      }
+    ]
   }
 }
