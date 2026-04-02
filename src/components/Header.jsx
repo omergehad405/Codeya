@@ -138,6 +138,25 @@ function Header() {
           .nav-links { display: none; }
           .desktop-cta { display: none; }
         }
+
+        /* Medium screen: show nav-middle */
+        @media (max-width: 1200px) and (min-width: 901px) {
+          .nav-middle {
+            display: flex !important;
+          }
+        }
+        @media (min-width: 901px) and (max-width: 1200px) {
+          .cta-btn, .wa-btn {
+            font-size: 14px;
+          }
+        }
+        /* Hide nav-middle by default */
+        .nav-middle {
+          display: none;
+          align-items: center;
+          gap: 10px;
+        }
+
         /* Make nav-links horizontal scrollable for extra small screens and prevent breaking layout */
         @media (max-width: 600px) {
           .nav-links {
@@ -403,24 +422,30 @@ function Header() {
             </ul>
           </nav>
 
-          {/* Right side (removed Get In Touch btn from here) */}
-          <div className="nav-right">
-            <button className="lang-btn" onClick={toggleLanguage} title="Switch language">
-              {i18n.language === 'en' ? 'AR' : 'EN'}
-            </button>
-
+          {/* Middle area for WhatsApp and CTA on medium screens */}
+          <div className="nav-middle">
             <a
               href="https://wa.me/201105710609"
               target="_blank"
               rel="noopener noreferrer"
               className="wa-btn"
               title="WhatsApp"
+              style={{ marginRight: 7 }}
             >
               <FaWhatsapp />
             </a>
+            <Link to="/contact" className="cta-btn desktop-cta">
+              {t('cta.getInTouch')}
+              <span className="cta-dot" />
+            </Link>
+          </div>
 
+          {/* Right side (Get In Touch and WhatsApp removed from here) */}
+          <div className="nav-right">
+            <button className="lang-btn" onClick={toggleLanguage} title="Switch language">
+              {i18n.language === 'en' ? 'AR' : 'EN'}
+            </button>
             <div className="nav-divider" />
-
             {/* Add menu button for mobile navigation */}
             <button
               className="menu-btn"
