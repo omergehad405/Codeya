@@ -96,9 +96,16 @@ function Footer() {
                             <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-brand-neon/30 transition-colors">
                                 <FaPhone className="text-lg rotate-90" />
                             </div>
-                            <span className="group-hover:text-brand-neon transition-colors">
-                                +20 110710609
-                            </span>
+                            <a
+                                href="https://wa.me/201105710609"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group-hover:text-brand-neon transition-colors"
+                                title="Chat on WhatsApp"
+                            >
+                                +20 1105710609
+                            </a>
+                       
                         </div>
                     </div>
                 </div>

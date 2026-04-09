@@ -117,48 +117,61 @@ function ProjectCard({ project, index, labelsMap }) {
 export default function Projects() {
     const { t } = useTranslation()
     const [activeFilter, setActiveFilter] = useState('All')
+    const [apiProjects, setApiProjects] = useState([])
+    const [loading, setLoading] = useState(true)
 
-    const PROJECTS_BASIC = [
-        {
-            id: 1,
-            category: ["websites", "landing page"],
-            link: "https://afaqaltariq.sa/",
-            ready: true,
-            image: "./ProjectsImages/project1.png",
-        },
-        {
-            id: 2,
-            category: ["websites"],
-            link: "https://the-new-muslims.com/",
-            ready: true,
-            image: "./ProjectsImages/project2.png",
-        },
-    ]
-
-    const tData = t('projectsData', { returnObjects: true })
-    const projects = PROJECTS_BASIC.map(p => {
-        const d = tData.find(item => item.id === p.id)
-        return { ...p, ...d }
-    })
+    useEffect(() => {
+        fetch('https://codeya-backend.onrender.com/api/projects')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const mapped = data.data.projects.map(p => ({
+                        id: p._id,
+                        title: p.name,
+                        description: p.description,
+                        link: p.link,
+                        image: p.image,
+                        category: p.category || ['websites'],
+                        ready: p.status === 'completed' || !!p.link,
+                    }));
+                    setApiProjects(mapped);
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, []);
 
     const filters = [
         { value: 'All', label: t('projectsPage.filters.all') },
         { value: 'websites', label: t('projectsPage.filters.websites') },
         { value: 'landing page', label: t('projectsPage.filters.landing') },
-        { value: 'eCommerce', label: t('projectsPage.filters.ecommerce') },
+        { value: 'ecommerce', label: t('projectsPage.filters.ecommerce') },
         { value: 'mobile app', label: t('projectsPage.filters.mobile') },
+        { value: 'ui/ux', label: 'UI/UX' },
     ]
 
     const labels = {
         'websites': t('projectsPage.labels.websites'),
         'landing page': t('projectsPage.labels.landing'),
-        'eCommerce': t('projectsPage.labels.ecommerce'),
+        'ecommerce': t('projectsPage.labels.ecommerce'),
         'mobile app': t('projectsPage.labels.mobile'),
+        'ui/ux': 'UI/UX'
     }
 
     const filteredProjects = activeFilter === 'All'
-        ? projects
-        : projects.filter(p => p.category.includes(activeFilter))
+        ? apiProjects
+        : apiProjects.filter(p => p.category.includes(activeFilter))
+
+    if (loading) {
+        return (
+            <div className="font-sans min-h-screen bg-brand-light flex justify-center items-center">
+                <span className="text-brand-deep font-serif text-2xl font-bold animate-pulse">Loading projects...</span>
+            </div>
+        )
+    }
 
     return (
         <div className="font-sans bg-brand-light overflow-x-hidden">
@@ -213,15 +226,15 @@ export default function Projects() {
                         {t('projectsPage.workTitle1')}<br />
                         <span className="text-brand-deep">{t('projectsPage.workTitle2')}</span>
                     </h2>
-                    
+
                     <div className="flex justify-center flex-wrap gap-2.5 mt-9">
                         {filters.map(f => (
                             <button
                                 key={f.value}
                                 className={`px-5 py-2.5 rounded-full font-sans text-[12px] font-bold tracking-wider cursor-pointer border transition-all duration-200 
-                                ${activeFilter === f.value 
-                                    ? 'bg-brand-deep border-brand-deep text-white shadow-md' 
-                                    : 'bg-transparent border-[#c8ddd2] text-[#4a6b58] hover:border-brand-deep hover:text-brand-deep'}`}
+                                ${activeFilter === f.value
+                                        ? 'bg-brand-deep border-brand-deep text-white shadow-md'
+                                        : 'bg-transparent border-[#c8ddd2] text-[#4a6b58] hover:border-brand-deep hover:text-brand-deep'}`}
                                 onClick={() => setActiveFilter(f.value)}
                             >
                                 {f.label}
@@ -272,4 +285,4 @@ export default function Projects() {
             </div>
         </div>
     )
-}
+}

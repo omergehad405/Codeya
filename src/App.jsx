@@ -7,6 +7,7 @@ import Projects from './pages/ProjectsPage/Projects'
 import HomePage from './pages/HomePage/HomePage'
 import ContactPage from './pages/ContactPage/ContactPage'
 import AboutPage from './pages/AboutPage/AboutPage'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   const { i18n } = useTranslation()
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

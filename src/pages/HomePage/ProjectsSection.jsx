@@ -32,27 +32,6 @@ function Reveal({ children, delay = 0, direction = 'up' }) {
     )
 }
 
-// Adjust/extend this list to match your actual projects data
-const PREVIEW_PROJECTS = [
-    {
-        id: 1,
-        title: 'Afaq Al Tareq',
-        category: ['websites', 'landing page'],
-        description: 'A modern, interactive showcase built for Afaq Al Tareq — a professional design that reflects their brand identity.',
-        link: 'https://afaqaltariq.sa/',
-        ready: true,
-        image: './ProjectsImages/project1.png',
-    },
-    {
-        id: 2,
-        title: 'The New Muslims',
-        category: ['websites'],
-        description: 'A full-featured website for new Muslims — combining simplicity with rich, meaningful content.',
-        link: 'https://the-new-muslims.com/',
-        ready: true,
-        image: './ProjectsImages/project2.png',
-    },
-]
 
 const LABELS = {
     'websites': 'Website',
@@ -111,7 +90,7 @@ function ProjectCard({ project, index }) {
                             {project.description}
                         </p>
                     </div>
-                    
+
                     <div className="flex items-center justify-between pt-4 border-t border-brand-border">
                         {project.ready && project.link ? (
                             <a
@@ -141,6 +120,41 @@ function ProjectCard({ project, index }) {
 
 export default function ProjectsSection() {
     const { t } = useTranslation()
+    const [previewProjects, setPreviewProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('https://codeya-backend.onrender.com/api/projects')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const mapped = data.data.projects.slice(0, 3).map(p => ({
+                        id: p._id,
+                        title: p.name,
+                        description: p.description,
+                        link: p.link,
+                        image: p.image,
+                        category: p.category || ['websites'],
+                        ready: p.status === 'completed' || !!p.link,
+                    }));
+                    setPreviewProjects(mapped);
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return (
+            <section id="projects" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32 flex justify-center items-center">
+                <span className="text-brand-deep font-serif text-2xl font-bold animate-pulse">Loading projects...</span>
+            </section>
+        )
+    }
+
     return (
         <section id="projects" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32">
             <div className="max-w-[1280px] mx-auto w-full">
@@ -168,11 +182,11 @@ export default function ProjectsSection() {
                 </Reveal>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-10 justify-items-center">
-                    {PREVIEW_PROJECTS.map((project, i) => (
+                    {previewProjects.map((project, i) => (
                         <ProjectCard key={project.id} project={project} index={i} />
                     ))}
                 </div>
             </div>
         </section>
     )
-}
+}

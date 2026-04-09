@@ -96,21 +96,64 @@ export default function HeroSection() {
 
           {/* ── RIGHT ── */}
           <div className="hidden min-[901px]:flex opacity-0 animate-[fadeLeft_0.8s_0.3s_ease_forwards] h-[520px] items-center justify-center relative">
-            <div className="relative w-full max-w-[480px] animate-[imageFloat_4.5s_ease-in-out_infinite]">
-              <img
-                src="/Hero.jpg"
-                alt="hero visual"
-                className="w-full h-auto block rounded-3xl object-cover"
-              />
-              <div className="absolute -bottom-5.5 left-[10%] w-[80%] h-7 bg-[radial-gradient(ellipse,rgba(0,0,0,0.4)_0%,transparent_70%)] rounded-[50%] animate-[shadowPulse_4.5s_ease-in-out_infinite]" />
+            <div className="relative w-full max-w-[480px] h-[480px] animate-[imageFloat_4.5s_ease-in-out_infinite]">
+              
+              {/* Background ambient orbs */}
+              <div className="absolute top-10 right-10 w-[240px] h-[240px] rounded-full bg-brand-neon opacity-20 blur-[60px]" />
+              <div className="absolute bottom-10 left-10 w-[280px] h-[280px] rounded-full bg-[#002f23] opacity-80 blur-[60px]" />
+              
+              {/* Decorative wireframe rings */}
+              <div className="absolute inset-0 border border-white/5 rounded-full animate-[spin_30s_linear_infinite] border-dashed" />
+              <div className="absolute inset-10 border border-brand-neon/10 rounded-full animate-[spin_20s_linear_infinite_reverse] border-dotted" />
+
+              {/* Main Glassmorphic Card (IDE Mockup) */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] bg-[#001f17]/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.4)] p-6 overflow-hidden">
+                {/* MacOS Dots */}
+                <div className="flex gap-2 mb-6">
+                  <div className="w-2.5 h-2.5 rounded-full bg-brand-neon/80 shadow-[0_0_8px_rgba(4,217,57,0.5)]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                </div>
+                {/* Code snippets */}
+                <div className="font-mono text-[11px] leading-[1.8] text-white/50 space-y-1">
+                   <p><span className="text-brand-neon/90">const</span> <span className="text-white">Agency</span> = {'{'}</p>
+                   <p className="pl-5">name: <span className="text-brand-neon">"Codeya"</span>,</p>
+                   <p className="pl-5">mission: <span className="text-brand-neon">"Innovation"</span>,</p>
+                   <p className="pl-5">stack: [<span className="text-[#a5b4ac]">"React", "Node", "MongoDB"</span>]</p>
+                   <p>{'};'}</p>
+                   <div className="h-3" />
+                   <p><span className="text-brand-neon/90">function</span> <span className="text-white">buildFuture</span>() {'{'}</p>
+                   <p className="pl-5 text-brand-neon">return <span className="text-white">Agency</span>.launch();</p>
+                   <p>{'}'}</p>
+                </div>
+                
+                {/* Decorative overlay line */}
+                <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-neon/30 to-transparent" />
+              </div>
+
+              {/* Floating UI Elements */}
+              <div className="absolute top-16 -right-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 shadow-2xl flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-brand-neon/15 border border-brand-neon/30 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-brand-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[9px] text-[#8aa697] font-sans uppercase tracking-[2px]">Performance</p>
+                  <p className="text-[13px] text-white font-black tracking-wide">100%</p>
+                </div>
+              </div>
 
               {/* floating badge */}
-              <div className="absolute top-6 -left-5 bg-white rounded-2xl px-[18px] py-3 shadow-[0_12px_36px_rgba(0,0,0,0.18)] flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-brand-neon animate-pulse" />
-                <span className="font-sans text-xs font-bold text-brand-deep">
+              <div className="absolute bottom-20 -left-8 bg-brand-light border border-brand-border rounded-2xl px-[18px] py-3.5 shadow-[0_16px_48px_rgba(0,0,0,0.2)] flex items-center gap-3 z-10 transition-transform duration-500 hover:scale-105 hover:border-brand-neon/30">
+                <span className="w-2.5 h-2.5 rounded-full bg-brand-neon animate-pulse shadow-[0_0_8px_rgba(4,217,57,0.4)]" />
+                <span className="font-sans text-[11px] font-black text-brand-dark tracking-wider uppercase">
                   {t('homePage.hero.availableNow')}
                 </span>
               </div>
+
+              {/* Shadow effect */}
+              <div className="absolute -bottom-5.5 left-[10%] w-[80%] h-7 bg-[radial-gradient(ellipse,rgba(0,0,0,0.5)_0%,transparent_70%)] rounded-[50%] animate-[shadowPulse_4.5s_ease-in-out_infinite]" />
             </div>
           </div>
         </div>

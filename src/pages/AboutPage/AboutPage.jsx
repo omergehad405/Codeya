@@ -19,13 +19,13 @@ function useInView(threshold = 0.15) {
 
 function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
     const [ref, inView] = useInView()
-    const transforms = { 
-        up: 'translate-y-10', 
-        left: '-translate-x-10', 
-        right: 'translate-x-10', 
-        none: 'translate-0' 
+    const transforms = {
+        up: 'translate-y-10',
+        left: '-translate-x-10',
+        right: 'translate-x-10',
+        none: 'translate-0'
     }
-    
+
     return (
         <div
             ref={ref}
@@ -40,11 +40,25 @@ function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
 
 export default function AboutPage() {
     const { t } = useTranslation()
-    
+    const [apiStats, setApiStats] = useState({ projectsCount: 2, successRate: 98 });
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    setApiStats(result.data);
+                }
+            } catch (err) { }
+        };
+        fetchStats();
+    }, []);
+
     const stats = [
-        { num: '2+', label: t('aboutPage.stats.projects') },
-        { num: '98%', label: t('aboutPage.stats.satisfaction') },
-        { num: '1+', label: t('aboutPage.stats.years') },
+        { num: `${apiStats.projectsCount || 2}+`, label: t('aboutPage.stats.projects') },
+        { num: `${apiStats.successRate || 98}%`, label: t('aboutPage.stats.satisfaction') },
+        { num: `${Math.max(1, new Date().getFullYear() - 2025)}+`, label: t('aboutPage.stats.years') },
         { num: '24h', label: t('aboutPage.stats.response') },
     ]
 
@@ -201,4 +215,4 @@ export default function AboutPage() {
             </div>
         </div>
     )
-}
+}

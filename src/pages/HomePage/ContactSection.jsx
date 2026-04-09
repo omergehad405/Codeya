@@ -42,7 +42,7 @@ const contacts = [
         ),
     },
     {
-        href: 'https://wa.me/20110710609', type: 'WHATSAPP', val: '+20 110 710 609',
+        href: 'https://wa.me/20110710609', type: 'WHATSAPP', val: '+201105710609',
         icon: (
             <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
                 <circle cx="16" cy="16" r="16" fill="#04d939" />
@@ -96,7 +96,7 @@ export default function ContactSection() {
     const { t } = useTranslation()
     return (
         <section id="contact" className="bg-brand-deep font-sans py-24 px-6 md:py-32 lg:px-12 relative overflow-hidden text-center">
-            
+
             {/* Radial glow */}
             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(4,217,57,0.06)_0%,transparent_65%)]" />
 

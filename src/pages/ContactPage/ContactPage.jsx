@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
-import emailjs from '@emailjs/browser'
-import { EMAIL_CONFIG } from '../../utils/Emailjs'
-
-
+import axios from 'axios';
 
 export default function ContactPage() {
     const { t } = useTranslation()
@@ -40,20 +37,14 @@ export default function ContactPage() {
         setError('')
 
         try {
-            await emailjs.send(
-                EMAIL_CONFIG.serviceId,
-                EMAIL_CONFIG.templateId,
-                {
-                    from_name: form.name,
-                    company: form.company || 'N/A',
-                    from_email: form.email,
-                    phone: form.phone || 'N/A',
-                    services: form.services.join(', '),
-                    message: form.message || 'No additional message.',
-                    to_email: 'codeyaa01@gmail.com',
-                },
-                EMAIL_CONFIG.publicKey
-            )
+            await axios.post('https://codeya-backend.onrender.com/api/contact', {
+                name: form.name,
+                company: form.company || 'N/A',
+                email: form.email,
+                phone: form.phone || 'N/A',
+                services: form.services.map(s => servicesList.find(sl => sl.key === s)?.label || s),
+                message: form.message || 'No additional message.'
+            });
             setStep(4)
         } catch (err) {
             setError(t('contactPage.step3.err'))
@@ -68,7 +59,7 @@ export default function ContactPage() {
         setStep(1)
     }
 
-    const PHONE_NUMBER = '+1 (234) 567-8910'
+    const PHONE_NUMBER = '+201105710609'
 
     return (
         <section className="font-sans py-10 px-4 min-h-screen bg-brand-light">
@@ -119,9 +110,15 @@ export default function ContactPage() {
                             <div className="w-7 h-7 rounded-full bg-brand-neon/15 flex items-center justify-center text-brand-neon">
                                 <FaPhoneAlt size={12} />
                             </div>
-                            <a href={`tel:${PHONE_NUMBER.replace(/[^+\d]/g, "")}`} className="hover:text-brand-neon transition-colors">
+                            <a
+                                href={`https://wa.me/${PHONE_NUMBER.replace(/[^+\d]/g, "")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-brand-neon transition-colors"
+                            >
                                 {PHONE_NUMBER}
                             </a>
+
                         </div>
                         <div className="flex gap-2 mt-4">
                             {[
@@ -144,9 +141,9 @@ export default function ContactPage() {
                         <span className="text-sm font-semibold text-[#1a3a2e]">{stepTitles[step - 1]}</span>
                         <div className="flex gap-1">
                             {[1, 2, 3].map(i => (
-                                <div key={i} 
+                                <div key={i}
                                     className={`h-1.5 rounded-full transition-all duration-300 
-                                    ${i <= Math.min(step, 3) ? 'w-5 bg-brand-neon' : 'w-1.5 bg-[#e0ede6]'}`} 
+                                    ${i <= Math.min(step, 3) ? 'w-5 bg-brand-neon' : 'w-1.5 bg-[#e0ede6]'}`}
                                 />
                             ))}
                         </div>
@@ -167,7 +164,7 @@ export default function ContactPage() {
                                             <input className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors" type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('contactPage.step1.phone')} />
                                         </div>
                                         <div className="flex justify-end">
-                                            <button type="button" onClick={() => setStep(2)} disabled={!form.name || !form.email} 
+                                            <button type="button" onClick={() => setStep(2)} disabled={!form.name || !form.email}
                                                 className="bg-brand-deep text-white rounded-xl px-6 py-2.5 text-sm font-bold tracking-tight disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-dark transition-colors">
                                                 {t('contactPage.step1.btn')}
                                             </button>
@@ -181,7 +178,7 @@ export default function ContactPage() {
                                         <p className="text-[12px] text-[#7aab96] mb-3">{t('contactPage.step2.title')}</p>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
                                             {servicesList.map(({ key, label, icon }) => (
-                                                <button key={key} type="button" onClick={() => toggleService(key)} 
+                                                <button key={key} type="button" onClick={() => toggleService(key)}
                                                     className={`transition-all duration-150 border rounded-lg px-4 py-2.5 text-xs font-semibold flex items-center gap-2
                                                     ${form.services.includes(key) ? 'border-brand-deep bg-brand-deep text-white shadow-md' : 'border-[#ddeee5] bg-[#f6fbf8] text-brand-deep hover:border-brand-neon'}`}>
                                                     <img src={icon} alt="" className="w-4 h-4 brightness-100 contrast-125" />
@@ -251,4 +248,4 @@ export default function ContactPage() {
             </div>
         </section>
     )
-}
+}

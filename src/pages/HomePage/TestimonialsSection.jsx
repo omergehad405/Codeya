@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Star, Quote, User } from 'lucide-react'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -50,8 +51,54 @@ function Reveal({ children, delay = 0 }) {
     )
 }
 
+function TestimonialCard({ testimonial }) {
+    return (
+        <div className="bg-white rounded-[24px] border border-[#c8ddd2] p-8 shadow-sm hover:shadow-xl transition-all duration-300 relative group flex flex-col h-full">
+            <Quote className="absolute top-6 right-6 w-10 h-10 text-brand-neon/10 group-hover:text-brand-neon/20 transition-colors" />
+            <div className="flex gap-1 mb-6">
+                {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className={`w-4 h-4 ${i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200'} `} />
+                ))}
+            </div>
+            <p className="text-[#4a6b58] leading-relaxed mb-8 relative z-10 font-medium flex-1">
+                "{testimonial.message}"
+            </p>
+            <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-brand-light flex items-center justify-center border-2 border-brand-neon/20 shrink-0">
+                    {testimonial.image ? (
+                        <img src={testimonial.image} alt={testimonial.clientName} className="w-full h-full object-cover" />
+                    ) : (
+                        <User className="w-5 h-5 text-[#6b8a78]" />
+                    )}
+                </div>
+                <div>
+                    <h4 className="font-bold text-brand-dark text-sm leading-tight">{testimonial.clientName}</h4>
+                    <p className="text-[10px] font-bold text-[#6b8a78] uppercase tracking-wider mt-1">{testimonial.role}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export default function TestimonialsSection() {
     const { t } = useTranslation()
+    const [testimonials, setTestimonials] = useState([])
+
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const res = await fetch('https://codeya-backend.onrender.com/api/testimonials')
+                const result = await res.json()
+                if (result.status === 'success') {
+                    setTestimonials(result.data.testimonials)
+                }
+            } catch (err) {
+                console.error("Error fetching testimonials", err)
+            }
+        }
+        fetchTestimonials()
+    }, [])
+
     return (
         <section id="testimonials" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32 overflow-hidden">
             <div className="max-w-[1280px] mx-auto w-full">
@@ -68,9 +115,19 @@ export default function TestimonialsSection() {
                 </Reveal>
 
                 <Reveal delay={0.15}>
-                    <SoonBadge />
+                    {testimonials.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                            {testimonials.map(test => (
+                                <div key={test._id} className="h-full">
+                                    <TestimonialCard testimonial={test} />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <SoonBadge />
+                    )}
                 </Reveal>
             </div>
         </section>
     )
-}
+}

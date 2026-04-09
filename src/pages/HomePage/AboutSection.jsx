@@ -17,13 +17,13 @@ function useInView(threshold = 0.12) {
 
 function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
     const [ref, inView] = useInView()
-    const transforms = { 
-        up: 'translate-y-9', 
-        left: '-translate-x-9', 
-        right: 'translate-x-9', 
-        none: 'translate-0' 
+    const transforms = {
+        up: 'translate-y-9',
+        left: '-translate-x-9',
+        right: 'translate-x-9',
+        none: 'translate-0'
     }
-    
+
     return (
         <div
             ref={ref}
@@ -38,10 +38,25 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
 
 export default function AboutSection() {
     const { t } = useTranslation()
+    const [apiStats, setApiStats] = useState({ projectsCount: 2, successRate: 98 });
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    setApiStats(result.data);
+                }
+            } catch (err) { }
+        };
+        fetchStats();
+    }, []);
+
     const PILLARS = [
-        t('homePage.about.pillars.clean'), 
-        t('homePage.about.pillars.onTime'), 
-        t('homePage.about.pillars.honest'), 
+        t('homePage.about.pillars.clean'),
+        t('homePage.about.pillars.onTime'),
+        t('homePage.about.pillars.honest'),
         t('homePage.about.pillars.support')
     ]
 
@@ -101,9 +116,9 @@ export default function AboutSection() {
                             {/* Mini stats */}
                             <div className="grid grid-cols-3 gap-2.5 mt-8">
                                 {[
-                                    ['2+', t('homePage.about.miniStats.projects')], 
-                                    ['98%', t('homePage.about.miniStats.satisfied')], 
-                                    ['1yr', t('homePage.about.miniStats.experience')]
+                                    [`${apiStats.projectsCount || 2}+`, t('homePage.about.miniStats.projects')],
+                                    [`${apiStats.successRate || 98}%`, t('homePage.about.miniStats.satisfied')],
+                                    [`${Math.max(1, new Date().getFullYear() - 2025)}yr`, t('homePage.about.miniStats.experience')]
                                 ].map(([n, l], idx) => (
                                     <div key={idx} className="bg-white/6 rounded-xl py-3.5 text-center">
                                         <div className="font-serif text-[22px] font-black text-brand-neon leading-none">{n}</div>

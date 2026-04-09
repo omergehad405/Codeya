@@ -26,11 +26,31 @@ function Counter({ target, suffix = '' }) {
 
 export default function StatsBand() {
     const { t } = useTranslation()
+    const [apiStats, setApiStats] = useState({
+        projectsCount: 2,
+        clientsCount: 0,
+        successRate: 98
+    });
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    setApiStats(result.data);
+                }
+            } catch (err) {
+                console.error("Error fetching stats", err);
+            }
+        };
+        fetchStats();
+    }, []);
 
     const statsData = [
-        { num: 2, suffix: '+', label: t('homePage.stats.projectsComp') },
-        { num: 98, suffix: '%', label: t('homePage.stats.clientSat') },
-        { num: 1, suffix: 'yr', label: t('homePage.stats.industry') },
+        { num: apiStats.projectsCount || 2, suffix: '+', label: t('homePage.stats.projectsComp') },
+        { num: apiStats.successRate || 98, suffix: '%', label: t('homePage.stats.clientSat') },
+        { num: Math.max(1, new Date().getFullYear() - 2025), suffix: 'yr', label: t('homePage.stats.industry') },
         { num: 24, suffix: 'h', label: t('homePage.stats.responseTime') },
     ]
 
@@ -54,4 +74,4 @@ export default function StatsBand() {
             ))}
         </div>
     )
-}
+}
