@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import SEO from '../../components/SEO'
 
 
 
@@ -174,115 +175,122 @@ export default function Projects() {
     }
 
     return (
-        <div className="font-sans bg-brand-light overflow-x-hidden">
-            {/* ── HERO ── */}
-            <div className="relative bg-brand-deep min-h-[88vh] flex flex-col justify-end px-6 pb-20 md:px-12 lg:px-24 overflow-hidden">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(80px,16vw,200px)] font-black text-white/[0.03] whitespace-nowrap pointer-events-none tracking-[-4px]">
-                    {t('projectsPage.hero.bg')}
-                </div>
-                <div className="absolute top-10 right-6 md:right-12 font-sans text-xs text-white/20 tracking-[3px] uppercase [writing-mode:vertical-rl]">
-                    {t('projectsPage.hero.corner')}
-                </div>
-                <div className="absolute top-10 left-6 md:left-12 grid grid-cols-5 gap-2 opacity-15">
-                    {Array.from({ length: 25 }).map((_, i) => (
-                        <div key={i} className="w-1 h-1 rounded-full bg-white" />
-                    ))}
-                </div>
-
-                <div className="animate-[fadeUp_0.8s_ease_0.2s_forwards] opacity-0">
-                    <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 text-xs font-bold text-brand-neon tracking-widest uppercase mb-7">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
-                        {t('projectsPage.hero.badge')}
+        <>
+            <SEO
+                title="Our Projects"
+                description="Explore Codeya's portfolio of web and mobile apps built for clients around the world."
+                url="/projects"
+            />
+            <div className="font-sans bg-brand-light overflow-x-hidden">
+                {/* ── HERO ── */}
+                <div className="relative bg-brand-deep min-h-[88vh] flex flex-col justify-end px-6 pb-20 md:px-12 lg:px-24 overflow-hidden">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(80px,16vw,200px)] font-black text-white/[0.03] whitespace-nowrap pointer-events-none tracking-[-4px]">
+                        {t('projectsPage.hero.bg')}
                     </div>
-                </div>
-
-                <div className="animate-[fadeUp_0.8s_ease_0.4s_forwards] opacity-0">
-                    <h1 className="font-serif text-[clamp(40px,7vw,86px)] font-black text-white leading-none tracking-tight mb-6">
-                        {t('projectsPage.hero.title1')}<br />
-                        <span className="text-brand-neon italic">{t('projectsPage.hero.title2')}</span><br />
-                        {t('projectsPage.hero.title3')}
-                    </h1>
-                </div>
-
-                <div className="animate-[fadeUp_0.8s_ease_0.6s_forwards] opacity-0">
-                    <p className="text-[clamp(14px,1.5vw,16px)] text-white/50 max-w-[480px] leading-relaxed mb-12">
-                        {t('projectsPage.hero.sub')}
-                    </p>
-                </div>
-
-                <div className="animate-[fadeUp_0.8s_ease_0.8s_forwards] opacity-0 flex items-center gap-3 text-white/30 text-[10px] tracking-[2px] uppercase">
-                    <div className="w-12 h-[1px] bg-white/20" />
-                    {t('projectsPage.hero.scroll')}
-                </div>
-            </div>
-
-            {/* ── PROJECTS ── */}
-            <div className="py-20 px-6 md:py-32 lg:px-24 bg-brand-light">
-                <Reveal>
-                    <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
-                        {t('projectsPage.portfolio')}
+                    <div className="absolute top-10 right-6 md:right-12 font-sans text-xs text-white/20 tracking-[3px] uppercase [writing-mode:vertical-rl]">
+                        {t('projectsPage.hero.corner')}
                     </div>
-                    <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-bold text-brand-dark leading-tight tracking-tight">
-                        {t('projectsPage.workTitle1')}<br />
-                        <span className="text-brand-deep">{t('projectsPage.workTitle2')}</span>
-                    </h2>
-
-                    <div className="flex justify-center flex-wrap gap-2.5 mt-9">
-                        {filters.map(f => (
-                            <button
-                                key={f.value}
-                                className={`px-5 py-2.5 rounded-full font-sans text-[12px] font-bold tracking-wider cursor-pointer border transition-all duration-200 
-                                ${activeFilter === f.value
-                                        ? 'bg-brand-deep border-brand-deep text-white shadow-md'
-                                        : 'bg-transparent border-[#c8ddd2] text-[#4a6b58] hover:border-brand-deep hover:text-brand-deep'}`}
-                                onClick={() => setActiveFilter(f.value)}
-                            >
-                                {f.label}
-                            </button>
+                    <div className="absolute top-10 left-6 md:left-12 grid grid-cols-5 gap-2 opacity-15">
+                        {Array.from({ length: 25 }).map((_, i) => (
+                            <div key={i} className="w-1 h-1 rounded-full bg-white" />
                         ))}
                     </div>
-                    <div className="h-[1px] bg-gradient-to-r from-[#c8ddd2] via-[#c8ddd2]/20 to-transparent mt-10" />
-                </Reveal>
 
-                {filteredProjects.length === 0 ? (
-                    <div className="text-center py-20">
-                        <span className="inline-block text-sm text-[#6b8a78] bg-brand-deep/5 border border-[#e4ede8] px-7 py-3 rounded-full">
-                            {t('projectsPage.empty')}
-                        </span>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 max-w-[1280px] mx-auto">
-                        {filteredProjects.map((project, i) => (
-                            <ProjectCard key={project.id} project={project} index={i} labelsMap={labels} />
-                        ))}
-                    </div>
-                )}
-            </div>
-
-            {/* ── CTA ── */}
-            <div className="bg-brand-deep text-center py-24 px-6 md:py-32 relative overflow-hidden">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[280px] font-black text-white/[0.02] whitespace-nowrap pointer-events-none tracking-tighter">
-                    →
-                </div>
-                <div className="relative z-10 max-w-[800px] mx-auto">
-                    <Reveal>
-                        <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 text-xs font-bold text-brand-neon tracking-widest uppercase mb-6">
+                    <div className="animate-[fadeUp_0.8s_ease_0.2s_forwards] opacity-0">
+                        <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 text-xs font-bold text-brand-neon tracking-widest uppercase mb-7">
                             <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
-                            {t('projectsPage.cta.badge')}
+                            {t('projectsPage.hero.badge')}
                         </div>
-                        <h2 className="font-serif text-[clamp(30px,5vw,60px)] font-black text-white mb-4 leading-none tracking-tight">
-                            {t('projectsPage.cta.title1')}<br />
-                            <span className="text-brand-neon">{t('projectsPage.cta.title2')}</span>
-                        </h2>
-                        <p className="text-[15px] text-white/40 mb-10 leading-relaxed max-w-[500px] mx-auto">
-                            {t('projectsPage.cta.sub')}
+                    </div>
+
+                    <div className="animate-[fadeUp_0.8s_ease_0.4s_forwards] opacity-0">
+                        <h1 className="font-serif text-[clamp(40px,7vw,86px)] font-black text-white leading-none tracking-tight mb-6">
+                            {t('projectsPage.hero.title1')}<br />
+                            <span className="text-brand-neon italic">{t('projectsPage.hero.title2')}</span><br />
+                            {t('projectsPage.hero.title3')}
+                        </h1>
+                    </div>
+
+                    <div className="animate-[fadeUp_0.8s_ease_0.6s_forwards] opacity-0">
+                        <p className="text-[clamp(14px,1.5vw,16px)] text-white/50 max-w-[480px] leading-relaxed mb-12">
+                            {t('projectsPage.hero.sub')}
                         </p>
-                        <a href="/contact" className="inline-flex items-center gap-2.5 bg-brand-neon text-brand-deep text-sm font-black px-9 py-4 rounded-full tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_0_12px_rgba(4,217,57,0.1)]">
-                            {t('projectsPage.cta.btn')}
-                        </a>
+                    </div>
+
+                    <div className="animate-[fadeUp_0.8s_ease_0.8s_forwards] opacity-0 flex items-center gap-3 text-white/30 text-[10px] tracking-[2px] uppercase">
+                        <div className="w-12 h-[1px] bg-white/20" />
+                        {t('projectsPage.hero.scroll')}
+                    </div>
+                </div>
+
+                {/* ── PROJECTS ── */}
+                <div className="py-20 px-6 md:py-32 lg:px-24 bg-brand-light">
+                    <Reveal>
+                        <div className="text-[11px] font-bold tracking-[3px] uppercase text-brand-neon mb-4">
+                            {t('projectsPage.portfolio')}
+                        </div>
+                        <h2 className="font-serif text-[clamp(28px,4vw,48px)] font-bold text-brand-dark leading-tight tracking-tight">
+                            {t('projectsPage.workTitle1')}<br />
+                            <span className="text-brand-deep">{t('projectsPage.workTitle2')}</span>
+                        </h2>
+
+                        <div className="flex justify-center flex-wrap gap-2.5 mt-9">
+                            {filters.map(f => (
+                                <button
+                                    key={f.value}
+                                    className={`px-5 py-2.5 rounded-full font-sans text-[12px] font-bold tracking-wider cursor-pointer border transition-all duration-200 
+                                ${activeFilter === f.value
+                                            ? 'bg-brand-deep border-brand-deep text-white shadow-md'
+                                            : 'bg-transparent border-[#c8ddd2] text-[#4a6b58] hover:border-brand-deep hover:text-brand-deep'}`}
+                                    onClick={() => setActiveFilter(f.value)}
+                                >
+                                    {f.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="h-[1px] bg-gradient-to-r from-[#c8ddd2] via-[#c8ddd2]/20 to-transparent mt-10" />
                     </Reveal>
+
+                    {filteredProjects.length === 0 ? (
+                        <div className="text-center py-20">
+                            <span className="inline-block text-sm text-[#6b8a78] bg-brand-deep/5 border border-[#e4ede8] px-7 py-3 rounded-full">
+                                {t('projectsPage.empty')}
+                            </span>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 max-w-[1280px] mx-auto">
+                            {filteredProjects.map((project, i) => (
+                                <ProjectCard key={project.id} project={project} index={i} labelsMap={labels} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                {/* ── CTA ── */}
+                <div className="bg-brand-deep text-center py-24 px-6 md:py-32 relative overflow-hidden">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[280px] font-black text-white/[0.02] whitespace-nowrap pointer-events-none tracking-tighter">
+                        →
+                    </div>
+                    <div className="relative z-10 max-w-[800px] mx-auto">
+                        <Reveal>
+                            <div className="inline-flex items-center gap-2 bg-brand-neon/12 border border-brand-neon/30 rounded-full px-4 py-1.5 text-xs font-bold text-brand-neon tracking-widest uppercase mb-6">
+                                <span className="w-1.5 h-1.5 rounded-full bg-brand-neon animate-pulse" />
+                                {t('projectsPage.cta.badge')}
+                            </div>
+                            <h2 className="font-serif text-[clamp(30px,5vw,60px)] font-black text-white mb-4 leading-none tracking-tight">
+                                {t('projectsPage.cta.title1')}<br />
+                                <span className="text-brand-neon">{t('projectsPage.cta.title2')}</span>
+                            </h2>
+                            <p className="text-[15px] text-white/40 mb-10 leading-relaxed max-w-[500px] mx-auto">
+                                {t('projectsPage.cta.sub')}
+                            </p>
+                            <a href="/contact" className="inline-flex items-center gap-2.5 bg-brand-neon text-brand-deep text-sm font-black px-9 py-4 rounded-full tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_0_12px_rgba(4,217,57,0.1)]">
+                                {t('projectsPage.cta.btn')}
+                            </a>
+                        </Reveal>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
