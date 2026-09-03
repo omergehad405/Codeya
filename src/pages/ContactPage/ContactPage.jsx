@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
-import axios from 'axios';
 import SEO from '../../components/SEO';
+import { useContactMutation } from '../../hooks/useContactMutation';
 
 export default function ContactPage() {
     const { t } = useTranslation()
@@ -18,8 +18,9 @@ export default function ContactPage() {
 
     const stepTitles = t('contactPage.steps', { returnObjects: true })
     const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', services: [], message: '' })
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
+    const contactMutation = useContactMutation()
+    const [localError, setLocalError] = useState('')
+    const loading = contactMutation.isPending
 
     function handleChange(e) { setForm({ ...form, [e.target.name]: e.target.value }) }
 
@@ -32,31 +33,31 @@ export default function ContactPage() {
         }))
     }
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault()
-        setLoading(true)
-        setError('')
+        setLocalError('')
 
-        try {
-            await axios.post('https://codeya-backend.onrender.com/api/contact', {
-                name: form.name,
-                company: form.company || 'N/A',
-                email: form.email,
-                phone: form.phone || 'N/A',
-                services: form.services.map(s => servicesList.find(sl => sl.key === s)?.label || s),
-                message: form.message || 'No additional message.'
-            });
-            setStep(4)
-        } catch (err) {
-            setError(t('contactPage.step3.err'))
-        } finally {
-            setLoading(false)
-        }
+        contactMutation.mutate({
+            name: form.name,
+            company: form.company || 'N/A',
+            email: form.email,
+            phone: form.phone || 'N/A',
+            services: form.services.map(s => servicesList.find(sl => sl.key === s)?.label || s),
+            message: form.message || 'No additional message.'
+        }, {
+            onSuccess: () => {
+                setStep(4)
+            },
+            onError: () => {
+                setLocalError(t('contactPage.step3.err'))
+            }
+        });
     }
 
     function handleClose() {
         setForm({ name: '', company: '', email: '', phone: '', services: [], message: '' })
-        setError('')
+        setLocalError('')
+        contactMutation.reset()
         setStep(1)
     }
 
@@ -206,9 +207,9 @@ export default function ContactPage() {
                                             <p className="text-[12px] text-[#7aab96] mb-2">{t('contactPage.step3.title')}</p>
                                             <textarea className="w-full border border-[#e0ede6] rounded-xl p-3 text-sm text-brand-dark bg-[#fafdfb] outline-none focus:border-brand-neon transition-colors resize-none min-h-[120px]" name="message" value={form.message} onChange={handleChange} placeholder={t('contactPage.step3.placeholder')} rows={4} />
 
-                                            {error && (
+                                            {(localError || contactMutation.error) && (
                                                 <p className="text-[12px] text-red-500 mt-2 flex items-center gap-1">
-                                                    ⚠️ {error}
+                                                    ⚠️ {localError || contactMutation.error?.message || t('contactPage.step3.err')}
                                                 </p>
                                             )}
 

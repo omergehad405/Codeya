@@ -17,7 +17,7 @@ function Footer() {
     return (
         <footer className="w-full bg-[#004836] text-brand-offwhite py-12 md:py-16 relative">
             <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-start gap-12 lg:gap-8 px-6 md:px-12">
-                
+
                 {/* Left: Logo & Slogan */}
                 <div className="flex flex-col items-center lg:items-start gap-4 shrink-0 w-full lg:w-auto">
                     <img src="./footerLogo.png" alt="logo" className="w-[100px] md:w-[120px] object-contain" />
@@ -77,7 +77,7 @@ function Footer() {
                             <FaInstagram />
                         </a>
                     </div>
-                    
+
                     <div className="flex flex-col gap-4 text-[16px] text-brand-offwhite/80">
                         <div className='flex items-center gap-3 group'>
                             <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-brand-neon/30 transition-colors">
@@ -91,7 +91,7 @@ function Footer() {
                                 codeyaa01@gmail.com
                             </a>
                         </div>
-                        
+
                         <div className='flex items-center gap-3 group'>
                             <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-brand-neon/30 transition-colors">
                                 <FaPhone className="text-lg rotate-90" />
@@ -105,16 +105,16 @@ function Footer() {
                             >
                                 +20 1105710609
                             </a>
-                       
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             {/* Bottom Bar (Optional) */}
             <div className="mt-16 pt-8 border-t border-white/5 text-center">
                 <p className="text-brand-offwhite/30 text-sm tracking-widest uppercase">
-                    &copy; 2026 Codeyaa. All rights reserved.
+                    &copy; 2025 Codeyaa. All rights reserved.
                 </p>
             </div>
         </footer>

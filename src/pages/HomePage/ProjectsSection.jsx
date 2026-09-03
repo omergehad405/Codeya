@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useProjectsQuery } from '../../hooks/useQueries'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -120,32 +121,11 @@ function ProjectCard({ project, index }) {
 
 export default function ProjectsSection() {
     const { t } = useTranslation()
-    const [previewProjects, setPreviewProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { data: projects = [], isLoading: loading } = useProjectsQuery()
 
-    useEffect(() => {
-        fetch('https://codeya-backend.onrender.com/api/projects')
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    const mapped = data.data.projects.slice(0, 3).map(p => ({
-                        id: p._id,
-                        title: p.name,
-                        description: p.description,
-                        link: p.link,
-                        image: p.image,
-                        category: p.category || ['websites'],
-                        ready: p.status === 'completed' || !!p.link,
-                    }));
-                    setPreviewProjects(mapped);
-                }
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
-    }, []);
+    const previewProjects = [...projects]
+        .sort((a, b) => (b._id > a._id ? 1 : -1))
+        .slice(0, 3)
 
     if (loading) {
         return (

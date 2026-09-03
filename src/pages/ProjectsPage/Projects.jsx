@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SEO from '../../components/SEO'
+import { useProjectsQuery } from '../../hooks/useQueries'
 
 
 
@@ -118,32 +119,7 @@ function ProjectCard({ project, index, labelsMap }) {
 export default function Projects() {
     const { t } = useTranslation()
     const [activeFilter, setActiveFilter] = useState('All')
-    const [apiProjects, setApiProjects] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        fetch('https://codeya-backend.onrender.com/api/projects')
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    const mapped = data.data.projects.map(p => ({
-                        id: p._id,
-                        title: p.name,
-                        description: p.description,
-                        link: p.link,
-                        image: p.image,
-                        category: p.category || ['websites'],
-                        ready: p.status === 'completed' || !!p.link,
-                    }));
-                    setApiProjects(mapped);
-                }
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
-    }, []);
+    const { data: apiProjects = [], isLoading: loading } = useProjectsQuery()
 
     const filters = [
         { value: 'All', label: t('projectsPage.filters.all') },

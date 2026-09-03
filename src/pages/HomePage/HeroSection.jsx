@@ -10,12 +10,12 @@ export default function HeroSection() {
       <section id="hero-root" className="min-h-screen bg-[#004836] font-sans relative overflow-hidden flex flex-col justify-center">
 
         {/* Dot grid */}
-        <div 
-          className="absolute inset-0 z-0 pointer-events-none animate-[gridShift_14s_ease-in-out_infinite]" 
+        <div
+          className="absolute inset-0 z-0 pointer-events-none animate-[gridShift_14s_ease-in-out_infinite]"
           style={{
             backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
-          }} 
+          }}
         />
 
         {/* Ambient glow */}
@@ -28,7 +28,7 @@ export default function HeroSection() {
 
         {/* Corner label */}
         <div className="absolute top-10 right-[6vw] font-sans text-[11px] text-white/20 tracking-[3px] uppercase [writing-mode:vertical-rl] z-[2]">
-          Est. 2026
+          Est. 2025
         </div>
 
         {/* Dot grid decoration */}
@@ -97,11 +97,11 @@ export default function HeroSection() {
           {/* ── RIGHT ── */}
           <div className="hidden min-[901px]:flex opacity-0 animate-[fadeLeft_0.8s_0.3s_ease_forwards] h-[520px] items-center justify-center relative">
             <div className="relative w-full max-w-[480px] h-[480px] animate-[imageFloat_4.5s_ease-in-out_infinite]">
-              
+
               {/* Background ambient orbs */}
               <div className="absolute top-10 right-10 w-[240px] h-[240px] rounded-full bg-brand-neon opacity-20 blur-[60px]" />
               <div className="absolute bottom-10 left-10 w-[280px] h-[280px] rounded-full bg-[#002f23] opacity-80 blur-[60px]" />
-              
+
               {/* Decorative wireframe rings */}
               <div className="absolute inset-0 border border-white/5 rounded-full animate-[spin_30s_linear_infinite] border-dashed" />
               <div className="absolute inset-10 border border-brand-neon/10 rounded-full animate-[spin_20s_linear_infinite_reverse] border-dotted" />
@@ -116,17 +116,17 @@ export default function HeroSection() {
                 </div>
                 {/* Code snippets */}
                 <div className="font-mono text-[11px] leading-[1.8] text-white/50 space-y-1">
-                   <p><span className="text-brand-neon/90">const</span> <span className="text-white">Agency</span> = {'{'}</p>
-                   <p className="pl-5">name: <span className="text-brand-neon">"Codeya"</span>,</p>
-                   <p className="pl-5">mission: <span className="text-brand-neon">"Innovation"</span>,</p>
-                   <p className="pl-5">stack: [<span className="text-[#a5b4ac]">"React", "Node", "MongoDB"</span>]</p>
-                   <p>{'};'}</p>
-                   <div className="h-3" />
-                   <p><span className="text-brand-neon/90">function</span> <span className="text-white">buildFuture</span>() {'{'}</p>
-                   <p className="pl-5 text-brand-neon">return <span className="text-white">Agency</span>.launch();</p>
-                   <p>{'}'}</p>
+                  <p><span className="text-brand-neon/90">const</span> <span className="text-white">Agency</span> = {'{'}</p>
+                  <p className="pl-5">name: <span className="text-brand-neon">"Codeya"</span>,</p>
+                  <p className="pl-5">mission: <span className="text-brand-neon">"Innovation"</span>,</p>
+                  <p className="pl-5">stack: [<span className="text-[#a5b4ac]">"React", "Node", "MongoDB"</span>]</p>
+                  <p>{'};'}</p>
+                  <div className="h-3" />
+                  <p><span className="text-brand-neon/90">function</span> <span className="text-white">buildFuture</span>() {'{'}</p>
+                  <p className="pl-5 text-brand-neon">return <span className="text-white">Agency</span>.launch();</p>
+                  <p>{'}'}</p>
                 </div>
-                
+
                 {/* Decorative overlay line */}
                 <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-neon/30 to-transparent" />
               </div>
@@ -175,4 +175,4 @@ export default function HeroSection() {
       </section>
     </>
   )
-}
+}

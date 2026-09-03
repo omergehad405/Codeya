@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SEO from '../../components/SEO'
+import { useStatsQuery } from '../../hooks/useStatsQuery'
 
 
 
@@ -41,20 +42,7 @@ function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
 
 export default function AboutPage() {
     const { t } = useTranslation()
-    const [apiStats, setApiStats] = useState({ projectsCount: 2, successRate: 98 });
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
-                const result = await res.json();
-                if (result.status === 'success') {
-                    setApiStats(result.data);
-                }
-            } catch (err) { }
-        };
-        fetchStats();
-    }, []);
+    const { data: apiStats = { projectsCount: 2, successRate: 98 } } = useStatsQuery()
 
     const stats = [
         { num: `${apiStats.projectsCount || 2}+`, label: t('aboutPage.stats.projects') },
@@ -81,12 +69,12 @@ export default function AboutPage() {
             />
             <div className="font-sans bg-brand-light overflow-x-hidden">
                 {/* ── HERO ── */}
-                <div className="relative bg-brand-deep min-h-[92vh] flex flex-col justify-end px-6 pb-20 md:px-12 lg:px-24 overflow-hidden">
+                <div className="relative bg-brand-deep min-h-[72vh] flex flex-col justify-end px-6 pb-20 md:px-12 lg:px-24 overflow-hidden">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[clamp(100px,18vw,220px)] font-black text-white/[0.03] whitespace-nowrap pointer-events-none tracking-[-4px]">
                         CODEYAA
                     </div>
                     <div className="absolute top-10 right-6 md:right-12 font-sans text-xs text-white/20 tracking-[3px] uppercase [writing-mode:vertical-rl]">
-                        Est. 2026
+                        Est. 2025
                     </div>
                     <div className="absolute top-10 left-6 md:left-12 grid grid-cols-5 gap-2 opacity-15">
                         {Array.from({ length: 25 }).map((_, i) => (
@@ -135,7 +123,7 @@ export default function AboutPage() {
                                 </h2>
                                 <div className="space-y-4 text-[15px] text-[#4a6b58] leading-relaxed">
                                     <p>
-                                        {t('aboutPage.story.p1')} <strong className="text-brand-deep font-bold">2026</strong>{t('aboutPage.story.p1part2')}
+                                        {t('aboutPage.story.p1')} <strong className="text-brand-deep font-bold">2025</strong>{t('aboutPage.story.p1part2')}
                                     </p>
                                     <p>{t('aboutPage.story.p2')}</p>
                                     <p>{t('aboutPage.story.p3')}</p>

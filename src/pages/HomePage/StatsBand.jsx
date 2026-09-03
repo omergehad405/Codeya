@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useStatsQuery } from '../../hooks/useQueries'
 
 function Counter({ target, suffix = '' }) {
     const [val, setVal] = useState(0)
@@ -26,26 +27,7 @@ function Counter({ target, suffix = '' }) {
 
 export default function StatsBand() {
     const { t } = useTranslation()
-    const [apiStats, setApiStats] = useState({
-        projectsCount: 2,
-        clientsCount: 0,
-        successRate: 98
-    });
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
-                const result = await res.json();
-                if (result.status === 'success') {
-                    setApiStats(result.data);
-                }
-            } catch (err) {
-                console.error("Error fetching stats", err);
-            }
-        };
-        fetchStats();
-    }, []);
+    const { data: apiStats = { projectsCount: 2, successRate: 98 } } = useStatsQuery()
 
     const statsData = [
         { num: apiStats.projectsCount || 2, suffix: '+', label: t('homePage.stats.projectsComp') },

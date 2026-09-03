@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Star, Quote, User } from 'lucide-react'
+import { useTestimonialsQuery } from '../../hooks/useQueries'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -82,22 +83,7 @@ function TestimonialCard({ testimonial }) {
 
 export default function TestimonialsSection() {
     const { t } = useTranslation()
-    const [testimonials, setTestimonials] = useState([])
-
-    useEffect(() => {
-        const fetchTestimonials = async () => {
-            try {
-                const res = await fetch('https://codeya-backend.onrender.com/api/testimonials')
-                const result = await res.json()
-                if (result.status === 'success') {
-                    setTestimonials(result.data.testimonials)
-                }
-            } catch (err) {
-                console.error("Error fetching testimonials", err)
-            }
-        }
-        fetchTestimonials()
-    }, [])
+    const { data: testimonials = [] } = useTestimonialsQuery()
 
     return (
         <section id="testimonials" className="bg-brand-light font-sans py-20 px-6 lg:px-12 md:py-32 overflow-hidden">

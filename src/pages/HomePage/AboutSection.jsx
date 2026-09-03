@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useStatsQuery } from '../../hooks/useQueries'
 
 function useInView(threshold = 0.12) {
     const ref = useRef(null)
@@ -38,20 +39,7 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
 
 export default function AboutSection() {
     const { t } = useTranslation()
-    const [apiStats, setApiStats] = useState({ projectsCount: 2, successRate: 98 });
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const res = await fetch('https://codeya-backend.onrender.com/api/stats');
-                const result = await res.json();
-                if (result.status === 'success') {
-                    setApiStats(result.data);
-                }
-            } catch (err) { }
-        };
-        fetchStats();
-    }, []);
+    const { data: apiStats = { projectsCount: 2, successRate: 98 } } = useStatsQuery()
 
     const PILLARS = [
         t('homePage.about.pillars.clean'),
@@ -144,7 +132,7 @@ export default function AboutSection() {
                         {/* Founded badge */}
                         <div className="absolute -bottom-5 left-0 bg-brand-light border border-brand-border rounded-2xl px-5 py-3.5 shadow-[0_8px_24px_rgba(0,72,54,0.07)] z-[2]">
                             <div className="text-[10px] font-bold tracking-[2px] text-[#6b8a78] uppercase mb-1">{t('homePage.about.founded')}</div>
-                            <div className="font-serif text-[28px] font-black text-brand-deep tracking-tighter">2026</div>
+                            <div className="font-serif text-[28px] font-black text-brand-deep tracking-tighter">2025</div>
                         </div>
 
                     </div>
