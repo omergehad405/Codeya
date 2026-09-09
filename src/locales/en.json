@@ -3,6 +3,7 @@
     "nav": {
       "home": "Home",
       "about": "About",
+      "services": "Services",
       "projects": "Projects",
       "contact": "Contact",
       "reachUs": "Reach Us"
@@ -19,6 +20,7 @@
       "ourLinks": "Our Links",
       "home": "Home",
       "about": "About",
+      "services": "Services",
       "projects": "Projects",
       "contactUs": "Contact Us",
       "followUs": "Follow Us",
@@ -28,6 +30,35 @@
       "gmail": "Gmail",
       "sendEmail": "Send email via Gmail",
       "phone": "Phone"
+    },
+    "servicesPage": {
+      "meta": {
+        "title": "Services & Solutions",
+        "description": "Explore Codeya full suite of software development, web platforms, online stores, and product design capabilities."
+      },
+      "hero": {
+        "watermark": "SERVICES",
+        "badge": "Our Capabilities",
+        "title1": "Digital Solutions",
+        "title2": "Built for Scale",
+        "title3": "Crafted to Lead.",
+        "subtitle": "We design, engineer, and scale high-performance digital ecosystems tailored precisely around your business goals.",
+        "scroll": "Explore Services"
+      },
+      "allCategories": "All Services",
+      "bestSuitedFor": "BEST SUITED FOR",
+      "builtToAchieve": "BUILT TO ACHIEVE",
+      "canInclude": "CAN INCLUDE",
+      "scopeNotice": "Final project and service features depend on the agreed scope and deliverables.",
+      "exploreCta": "Inquire About",
+      "loading": "Loading service architectures...",
+      "cta": {
+        "badge": "Start Your Transformation",
+        "title": "Have a custom vision in mind? Let’s engineer it to reality.",
+        "desc": "Whether you need a full enterprise platform, a bespoke e-commerce store, or product strategy, we’re here to help you lead your industry.",
+        "button": "Book a Discovery Consultation",
+        "whatsapp": "Chat on WhatsApp"
+      }
     },
     "projectsPage": {
       "hero": {

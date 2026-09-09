@@ -10,6 +10,7 @@ function Footer() {
     const footerLinks = [
         { to: "/", text: t("footer.home") },
         { to: "/about", text: t("footer.about") },
+        { to: "/services", text: t("footer.services") },
         { to: "/projects", text: t("footer.projects") },
         { to: "/contact", text: t("footer.contactUs") },
     ];
